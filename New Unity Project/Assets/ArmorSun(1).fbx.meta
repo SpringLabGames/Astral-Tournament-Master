@@ -1,0 +1,169 @@
+fileFormatVersion: 2
+guid: 55abc17f8f9722442a90d751f2bd136d
+ModelImporter:
+  serializedVersion: 23
+  fileIDToRecycleName:
+    100000: Armor
+    100002: //RootNode
+    100004: BackSetter1
+    100006: BackSetter2
+    100008: CannonCenter
+    100010: CannonCover
+    100012: Cylinder
+    100014: Cylinder.001
+    100016: Cylinder.002
+    100018: Cylinder.003
+    100020: FrontSetter1
+    100022: FrontSetter2
+    100024: Lining
+    100026: MainCannon
+    100028: ShaftBack
+    100030: ShaftFront
+    400000: Armor
+    400002: //RootNode
+    400004: BackSetter1
+    400006: BackSetter2
+    400008: CannonCenter
+    400010: CannonCover
+    400012: Cylinder
+    400014: Cylinder.001
+    400016: Cylinder.002
+    400018: Cylinder.003
+    400020: FrontSetter1
+    400022: FrontSetter2
+    400024: Lining
+    400026: MainCannon
+    400028: ShaftBack
+    400030: ShaftFront
+    2100000: No Name
+    2300000: Armor
+    2300002: BackSetter1
+    2300004: BackSetter2
+    2300006: CannonCenter
+    2300008: CannonCover
+    2300010: Cylinder
+    2300012: Cylinder.001
+    2300014: Cylinder.002
+    2300016: Cylinder.003
+    2300018: FrontSetter1
+    2300020: FrontSetter2
+    2300022: Lining
+    2300024: MainCannon
+    2300026: ShaftBack
+    2300028: ShaftFront
+    3300000: Armor
+    3300002: BackSetter1
+    3300004: BackSetter2
+    3300006: CannonCenter
+    3300008: CannonCover
+    3300010: Cylinder
+    3300012: Cylinder.001
+    3300014: Cylinder.002
+    3300016: Cylinder.003
+    3300018: FrontSetter1
+    3300020: FrontSetter2
+    3300022: Lining
+    3300024: MainCannon
+    3300026: ShaftBack
+    3300028: ShaftFront
+    4300000: Armor
+    4300002: ShaftFront
+    4300004: Lining
+    4300006: ShaftBack
+    4300008: FrontSetter1
+    4300010: FrontSetter2
+    4300012: BackSetter1
+    4300014: BackSetter2
+    4300016: Cylinder
+    4300018: Cylinder.001
+    4300020: Cylinder.002
+    4300022: Cylinder.003
+    4300024: CannonCenter
+    4300026: MainCannon
+    4300028: CannonCover
+  externalObjects: {}
+  materials:
+    importMaterials: 1
+    materialName: 0
+    materialSearch: 1
+    materialLocation: 1
+  animations:
+    legacyGenerateAnimations: 4
+    bakeSimulation: 0
+    resampleCurves: 1
+    optimizeGameObjects: 0
+    motionNodeName: 
+    rigImportErrors: 
+    rigImportWarnings: 
+    animationImportErrors: 
+    animationImportWarnings: 
+    animationRetargetingWarnings: 
+    animationDoRetargetingWarnings: 0
+    importAnimatedCustomProperties: 0
+    importConstraints: 0
+    animationCompression: 1
+    animationRotationError: 0.5
+    animationPositionError: 0.5
+    animationScaleError: 0.5
+    animationWrapMode: 0
+    extraExposedTransformPaths: []
+    extraUserProperties: []
+    clipAnimations: []
+    isReadable: 1
+  meshes:
+    lODScreenPercentages: []
+    globalScale: 1
+    meshCompression: 0
+    addColliders: 0
+    useSRGBMaterialColor: 1
+    importVisibility: 1
+    importBlendShapes: 1
+    importCameras: 1
+    importLights: 1
+    swapUVChannels: 0
+    generateSecondaryUV: 0
+    useFileUnits: 1
+    optimizeMeshForGPU: 1
+    keepQuads: 0
+    weldVertices: 1
+    preserveHierarchy: 0
+    indexFormat: 0
+    secondaryUVAngleDistortion: 8
+    secondaryUVAreaDistortion: 15.000001
+    secondaryUVHardAngle: 88
+    secondaryUVPackMargin: 4
+    useFileScale: 1
+    previousCalculatedGlobalScale: 1
+    hasPreviousCalculatedGlobalScale: 0
+  tangentSpace:
+    normalSmoothAngle: 60
+    normalImportMode: 0
+    tangentImportMode: 3
+    normalCalculationMode: 4
+    legacyComputeAllNormalsFromSmoothingGroupsWhenMeshHasBlendShapes: 0
+    blendShapeNormalImportMode: 1
+    normalSmoothingSource: 0
+  importAnimation: 1
+  copyAvatar: 0
+  humanDescription:
+    serializedVersion: 2
+    human: []
+    skeleton: []
+    armTwist: 0.5
+    foreArmTwist: 0.5
+    upperLegTwist: 0.5
+    legTwist: 0.5
+    armStretch: 0.05
+    legStretch: 0.05
+    feetSpacing: 0
+    rootMotionBoneName: 
+    hasTranslationDoF: 0
+    hasExtraRoot: 0
+    skeletonHasParents: 1
+  lastHumanDescriptionAvatarSource: {instanceID: 0}
+  animationType: 0
+  humanoidOversampling: 1
+  additionalBone: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
