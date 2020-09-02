@@ -6,10 +6,12 @@ using UnityEngine;
 
 public class AstralBomb : ThrowablePowerUp
 {
+    public int damage;
     public float forceExplosion;
     public float radiusExplosion;
     private bool explosionFlag;
     public int timer;
+    private bool isTriggered;
 
     private CharacterController controller;
 
@@ -19,6 +21,7 @@ public class AstralBomb : ThrowablePowerUp
         Rigidbody rigid = GetComponent<Rigidbody>();
         rigid.AddForce(force);
         explosionFlag = false;
+        isTriggered = false;
     }
 
     private void OnTriggerEnter(Collider collider)
@@ -29,11 +32,14 @@ public class AstralBomb : ThrowablePowerUp
         {
             Rigidbody rigid = GetComponent<Rigidbody>();
             Vector3 position = transform.position;
-            rigid.AddExplosionForce(forceExplosion, position, radiusExplosion);
-            Destroy(gameObject);
+            StartCoroutine("instantExplode");
+            net.health -= damage;
         }
-        else if(collider is MeshCollider || collider is TerrainCollider)
+        else if (collider is MeshCollider || collider is TerrainCollider)
+        {
             explosionFlag = true;
+            
+        }
     }
 
     // Start is called before the first frame update
@@ -48,19 +54,34 @@ public class AstralBomb : ThrowablePowerUp
         if (explosionFlag)
         {
             print("FLAG TRUE");
-            StartCoroutine("explosionCoroutine");
+            if(!isTriggered) StartCoroutine("explosionCoroutine");
+            isTriggered = true;
         }
         else print("FLAG FALSE");
     }
 
     private IEnumerator explosionCoroutine()
     {
-        for (int i = 0; i < timer; i++)
-            yield return new WaitForSeconds(1);
+        
+        yield return new WaitForSeconds(timer);
         Rigidbody rigid = GetComponent<Rigidbody>();
         Vector3 position = transform.position;
+        transform.localScale = Vector3.zero;
         rigid.AddExplosionForce(forceExplosion, position, radiusExplosion);
+        GameObject explosion = Instantiate<GameObject>(Resources.Load<GameObject>("Prefabs/Particles/Explosion"));
+        explosion.transform.position = transform.position;
+        yield return new WaitForSeconds(1);
+        Destroy(explosion);
         Destroy(gameObject);
         
+    }
+
+    private IEnumerator instantExplode()
+    {
+        GameObject explosion = Instantiate<GameObject>(Resources.Load<GameObject>("Prefabs/Particles/Explosion"));
+        explosion.transform.position = transform.position;
+        yield return new WaitForSeconds(1);
+        Destroy(explosion);
+        Destroy(gameObject);
     }
 }

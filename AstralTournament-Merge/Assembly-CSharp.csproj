@@ -74,8 +74,10 @@
     <Compile Include="Assets\SampleScenes\Scripts\ParticleSceneControls.cs" />
     <Compile Include="Assets\SampleScenes\Scripts\PlaceTargetWithMouse.cs" />
     <Compile Include="Assets\SampleScenes\Scripts\SlowMoButton.cs" />
+    <Compile Include="Assets\Scripts\AI\FiniteStateMachineBase.cs" />
     <Compile Include="Assets\Scripts\Assemble.cs" />
     <Compile Include="Assets\Scripts\BackgroundMusic.cs" />
+    <Compile Include="Assets\Scripts\Bullet.cs" />
     <Compile Include="Assets\Scripts\Classes\Arena.cs" />
     <Compile Include="Assets\Scripts\Classes\Character.cs" />
     <Compile Include="Assets\Scripts\Classes\Global.cs" />
@@ -89,6 +91,7 @@
     <Compile Include="Assets\Scripts\MenuUI\PlayClick.cs" />
     <Compile Include="Assets\Scripts\MenuUI\StopClick.cs" />
     <Compile Include="Assets\Scripts\Movement.cs" />
+    <Compile Include="Assets\Scripts\Music.cs" />
     <Compile Include="Assets\Scripts\Networking\CreateMatch.cs" />
     <Compile Include="Assets\Scripts\Networking\JoinMatch.cs" />
     <Compile Include="Assets\Scripts\Networking\MatchMaker.cs" />
@@ -96,7 +99,9 @@
     <Compile Include="Assets\Scripts\Player\CameraMovement.cs" />
     <Compile Include="Assets\Scripts\Player\MousePointer.cs" />
     <Compile Include="Assets\Scripts\Player\PlayerStatus.cs" />
+    <Compile Include="Assets\Scripts\Player\Type.cs" />
     <Compile Include="Assets\Scripts\Player\VehicleMovement.cs" />
+    <Compile Include="Assets\Scripts\Power Ups\AstralArrow.cs" />
     <Compile Include="Assets\Scripts\Power Ups\AstralBomb.cs" />
     <Compile Include="Assets\Scripts\Power Ups\Base Classes\BoxPowerUp.cs" />
     <Compile Include="Assets\Scripts\Power Ups\Base Classes\FollowPowerUp.cs" />
@@ -105,12 +110,14 @@
     <Compile Include="Assets\Scripts\Power Ups\Base Classes\ThrowablePowerUp.cs" />
     <Compile Include="Assets\Scripts\Power Ups\BluePotion.cs" />
     <Compile Include="Assets\Scripts\Power Ups\FogBall.cs" />
+    <Compile Include="Assets\Scripts\Power Ups\GreenPotion.cs" />
     <Compile Include="Assets\Scripts\Selected\ArenaSelected.cs" />
     <Compile Include="Assets\Scripts\Selected\CharacterSelected.cs" />
     <Compile Include="Assets\Scripts\Selected\Select.cs" />
     <Compile Include="Assets\Scripts\Selected\Tile.cs" />
     <Compile Include="Assets\Scripts\Selected\TileSelected.cs" />
     <Compile Include="Assets\Scripts\Sound.cs" />
+    <Compile Include="Assets\Scripts\UNET\CoroutineData.cs" />
     <Compile Include="Assets\Scripts\UNET\CustomManager.cs" />
     <Compile Include="Assets\Scripts\UNET\NetworkVehicle.cs" />
     <Compile Include="Assets\Scripts\UNET\PlayerController.cs" />
@@ -148,19 +155,19 @@
     <None Include="Assets\TextMesh Pro\Resources\Shaders\TMP_SDF-Surface.shader" />
     <None Include="Assets\SampleScenes\Shaders\Skybox-Procedural.shader" />
     <Reference Include="Unity.TextMeshPro.Editor">
-      <HintPath>C:/Users/rizzi/Desktop/Astral-Tournament-Master/AstralTournament-Merge/Library/ScriptAssemblies/Unity.TextMeshPro.Editor.dll</HintPath>
+      <HintPath>D:/Progetti/Unity/master/Astral-Tournament-Master/AstralTournament-Merge/Library/ScriptAssemblies/Unity.TextMeshPro.Editor.dll</HintPath>
     </Reference>
     <Reference Include="Unity.PackageManagerUI.Editor">
-      <HintPath>C:/Users/rizzi/Desktop/Astral-Tournament-Master/AstralTournament-Merge/Library/ScriptAssemblies/Unity.PackageManagerUI.Editor.dll</HintPath>
+      <HintPath>D:/Progetti/Unity/master/Astral-Tournament-Master/AstralTournament-Merge/Library/ScriptAssemblies/Unity.PackageManagerUI.Editor.dll</HintPath>
     </Reference>
     <Reference Include="Unity.CollabProxy.Editor">
-      <HintPath>C:/Users/rizzi/Desktop/Astral-Tournament-Master/AstralTournament-Merge/Library/ScriptAssemblies/Unity.CollabProxy.Editor.dll</HintPath>
+      <HintPath>D:/Progetti/Unity/master/Astral-Tournament-Master/AstralTournament-Merge/Library/ScriptAssemblies/Unity.CollabProxy.Editor.dll</HintPath>
     </Reference>
     <Reference Include="Unity.TextMeshPro">
-      <HintPath>C:/Users/rizzi/Desktop/Astral-Tournament-Master/AstralTournament-Merge/Library/ScriptAssemblies/Unity.TextMeshPro.dll</HintPath>
+      <HintPath>D:/Progetti/Unity/master/Astral-Tournament-Master/AstralTournament-Merge/Library/ScriptAssemblies/Unity.TextMeshPro.dll</HintPath>
     </Reference>
     <Reference Include="Unity.Analytics.DataPrivacy">
-      <HintPath>C:/Users/rizzi/Desktop/Astral-Tournament-Master/AstralTournament-Merge/Library/ScriptAssemblies/Unity.Analytics.DataPrivacy.dll</HintPath>
+      <HintPath>D:/Progetti/Unity/master/Astral-Tournament-Master/AstralTournament-Merge/Library/ScriptAssemblies/Unity.Analytics.DataPrivacy.dll</HintPath>
     </Reference>
     <Reference Include="UnityEngine.AIModule">
       <HintPath>C:/Program Files/Unity/Hub/Editor/2018.4.26f1/Editor/Data/Managed/UnityEngine/UnityEngine.AIModule.dll</HintPath>
@@ -364,7 +371,7 @@
       <HintPath>C:/Program Files/Unity/Hub/Editor/2018.4.26f1/Editor/Data/UnityExtensions/Unity/UnitySpatialTracking/RuntimeEditor/UnityEngine.SpatialTracking.dll</HintPath>
     </Reference>
     <Reference Include="Unity.Analytics.StandardEvents">
-      <HintPath>C:/Users/rizzi/Desktop/Astral-Tournament-Master/AstralTournament-Merge/Library/PackageCache/com.unity.analytics@3.2.3/AnalyticsStandardEvents/Unity.Analytics.StandardEvents.dll</HintPath>
+      <HintPath>D:/Progetti/Unity/master/Astral-Tournament-Master/AstralTournament-Merge/Library/PackageCache/com.unity.analytics@3.2.3/AnalyticsStandardEvents/Unity.Analytics.StandardEvents.dll</HintPath>
     </Reference>
     <Reference Include="netstandard">
       <HintPath>C:/Program Files/Unity/Hub/Editor/2018.4.26f1/Editor/Data/NetStandard/ref/2.0.0/netstandard.dll</HintPath>

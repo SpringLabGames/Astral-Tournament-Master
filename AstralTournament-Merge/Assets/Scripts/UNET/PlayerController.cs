@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Networking;
@@ -18,10 +19,13 @@ public class PlayerController : NetworkBehaviour
     public float attack;
     public float defense;
     public float maneuverability;
+    public Type defenseType;
+
+    private bool mouseButtonPressed;
 
     private Vector3 velocity; //Variabili per movimento
     private float drag;
-  
+
 
     // Start is called before the first frame update
     void Start()
@@ -30,19 +34,18 @@ public class PlayerController : NetworkBehaviour
         global.player = GetComponent<NetworkVehicle>();
         initMovementThings();
         netManager = GameObject.Find("NetworkManager").GetComponent<CustomManager>();
-        
-
         if (isLocalPlayer)
         {
             print("LOCAL CLIENT!");
             NetworkVehicle net = GetComponent<NetworkVehicle>();
-            CmdSetComponents(net.cannon, net.armor, net.engine, net.wheel);
+            CmdSetComponents(net.cannon, net.armor, net.engine, net.wheel,net.defenseType);
             global.player = net;
         }
         else if (!hasAuthority)
         {
             createVehicle();
         }
+        mouseButtonPressed = false;
     }
 
     // Update is called once per frame
@@ -52,6 +55,12 @@ public class PlayerController : NetworkBehaviour
         {
             MoveCommands();
             PowerUpCommands();
+            ShootCommands();
+        }
+        else if(isServer && !isClient)
+        {
+            GameObject canvas = GameObject.Find("Canvas");
+            if(canvas!=null) canvas.SetActive(false);
         }
     }
 
@@ -64,6 +73,7 @@ public class PlayerController : NetworkBehaviour
             if (box != null)
             {
                 int powerUpIndex = GetRandomPowerUpIndex();
+                print(powerUpIndex);
                 CmdTakePowerUp(other.gameObject, powerUpIndex);
             }
         }
@@ -72,14 +82,14 @@ public class PlayerController : NetworkBehaviour
 
     private int GetRandomPowerUpIndex()
     {
-        return Random.Range(0, netManager.powerUpPrefabs.Count);
+        return UnityEngine.Random.Range(0, netManager.powerUpPrefabs.Count);
     }
 
     //Comandi e RPC
     [Command]
-    public void CmdTakePowerUp(GameObject collider,int powerUpIndex)
+    public void CmdTakePowerUp(GameObject collider, int powerUpIndex)
     {
-        if(!isClient)
+        if (!isClient)
         {
             PowerUp powerUp = netManager.powerUpPrefabs[powerUpIndex].GetComponent<PowerUp>();
             NetworkVehicle net = GetComponent<NetworkVehicle>();
@@ -90,7 +100,7 @@ public class PlayerController : NetworkBehaviour
     }
 
     [ClientRpc]
-    public void RpcTakePowerUp(GameObject collider,int powerUpIndex)
+    public void RpcTakePowerUp(GameObject collider, int powerUpIndex)
     {
         PowerUp powerUp = netManager.powerUpPrefabs[powerUpIndex].GetComponent<PowerUp>();
         NetworkVehicle net = GetComponent<NetworkVehicle>();
@@ -99,19 +109,24 @@ public class PlayerController : NetworkBehaviour
     }
 
     [Command]
-    public void CmdSetComponents(int cannon, int armor, int engine, int wheel)
+    public void CmdSetComponents(int cannon, int armor, int engine, int wheel, Type type)
     {
         this.cannon = cannon;
         this.armor = armor;
         this.engine = engine;
         this.wheel = wheel;
+        this.defenseType = type;
         print("CreateVehicle() Command...");
-        if (!isClient) createVehicle();
-        RpcSetComponents(cannon, armor, engine, wheel);
+        if (!isClient)
+        {
+            createVehicle();
+            transform.Rotate(0, 180, 0);
+        }
+        RpcSetComponents(cannon, armor, engine, wheel,type);
     }
 
     [ClientRpc]
-    public void RpcSetComponents(int cannon, int armor, int engine, int wheel)
+    public void RpcSetComponents(int cannon, int armor, int engine, int wheel,Type type)
     {
         print("CANNONS: " + this.cannon + "----" + cannon);
         this.cannon = cannon;
@@ -119,8 +134,16 @@ public class PlayerController : NetworkBehaviour
         this.armor = armor;
         this.engine = engine;
         this.wheel = wheel;
+        this.defenseType = type;
         print("createVehicle RPC...");
         createVehicle();
+        transform.Rotate(0, 180, 0);
+        if (isLocalPlayer)
+        {
+            Camera camera = GameObject.Find("Main Camera").GetComponent<Camera>();
+            camera.transform.position = new Vector3(0, 2.4f, 0.38f);
+            camera.transform.SetParent(global.player.transform);
+        }
     }
 
     [Command]
@@ -136,13 +159,13 @@ public class PlayerController : NetworkBehaviour
     [ClientRpc]
     public void RpcRotate(float angle)
     {
-         transform.Rotate(0, angle, 0);
+        transform.Rotate(0, angle, 0);
     }
 
     [Command]
     public void CmdTranslate(Vector3 velocity)
     {
-        if(!isClient)
+        if (!isClient)
         {
             transform.Translate(velocity);
         }
@@ -156,23 +179,104 @@ public class PlayerController : NetworkBehaviour
     }
 
     [Command]
-    public void CmdUsePowerUp(int index)
+    public void CmdUsePowerUp(int index, Vector3 force)
     {
-        if(!isClient)
+        List<PowerUp> ups = GetComponent<NetworkVehicle>().powerUps;
+        if (!isClient && ups.Count > 0)
         {
+            print("CMD USE");
+            print("INDEX - TOT: " + index + "-" + GetComponent<NetworkVehicle>().powerUps.Count);
             PowerUp powerUp = Instantiate<PowerUp>(GetComponent<NetworkVehicle>().powerUps[index]);
-            powerUp.use();
             GetComponent<NetworkVehicle>().powerUps.RemoveAt(index);
+            NetworkVehicle net = GetComponent<NetworkVehicle>();
+            powerUp.transform.position = net.spawnBullet.transform.position;
+            CoroutineData data = new CoroutineData(powerUp, force);
+            //StartCoroutine("UsePowerUp", data);
+            UsePowerUp(data);
+
         }
-        RpcUsePowerUp(index);
+        else print("UPS EMPTY");
+        RpcUsePowerUp(index, force);
     }
 
     [ClientRpc]
-    public void RpcUsePowerUp(int index)
+    public void RpcUsePowerUp(int index, Vector3 force)
     {
-        PowerUp powerUp = Instantiate<PowerUp>(GetComponent<NetworkVehicle>().powerUps[index]);
-        powerUp.use();
-        GetComponent<NetworkVehicle>().powerUps.RemoveAt(index);
+        List<PowerUp> ups = GetComponent<NetworkVehicle>().powerUps;
+        if(ups.Count>0)
+        {
+            print("RPC USE");
+            NetworkVehicle net = GetComponent<NetworkVehicle>();
+            print("INDEX - TOT: " + index + "-" + GetComponent<NetworkVehicle>().powerUps.Count);
+            PowerUp powerUp = Instantiate<PowerUp>(GetComponent<NetworkVehicle>().powerUps[index]);
+            powerUp.transform.position = net.spawnBullet.transform.position;
+            CoroutineData data = new CoroutineData(powerUp, force);
+            //StartCoroutine("UsePowerUp", data);
+            UsePowerUp(data);
+            GetComponent<NetworkVehicle>().powerUps.RemoveAt(index);
+        }
+        else print("UPS EMPTY");
+    }
+
+    [Command]
+    public void CmdShootBullet(Vector3 trajectory)
+    {
+        if(!isClient)
+        {
+            Bullet bullet = Instantiate<GameObject>(Resources.Load<GameObject>("Prefabs/Bullet")).GetComponent<Bullet>();
+            Vector3 position = GetComponent<NetworkVehicle>().spawnBullet.transform.position;
+            bullet.transform.position = position;
+            float cos = Vector3.Dot(Vector3.forward, trajectory.normalized);
+            float sin = Vector3.Cross(Vector3.forward, trajectory.normalized).magnitude;
+            double angle = Math.Atan2(cos, sin);
+            //bullet.transform.Rotate(0, 0, Math.Round(angle));
+            Rigidbody rigid = bullet.GetComponent<Rigidbody>();
+            rigid.AddForce(bullet.speed * trajectory * 10);
+            StartCoroutine("BulletTime");
+        }
+        RpcShootBullet(trajectory);
+    }
+
+    [ClientRpc]
+    public void RpcShootBullet(Vector3 trajectory)
+    {
+        GameObject bullet = Instantiate<GameObject>(Resources.Load<GameObject>("Prefabs/Bullet"));
+        bullet.GetComponent<Bullet>().attack = attack;
+        /*Vector3 position = GetComponent<NetworkVehicle>().spawnBullet.transform.position;
+        position.y -= 1;
+        bullet.transform.position = position;*/
+        //StartCoroutine("BulletTime");
+        Vector3 position = GetComponent<NetworkVehicle>().spawnBullet.transform.position;
+        bullet.transform.position = position;
+        float cos = Vector3.Dot(Vector3.forward, trajectory.normalized);
+        float sin = Vector3.Cross(Vector3.forward, trajectory.normalized).magnitude;
+        double angle = Math.Atan2(cos, sin);
+        //bullet.transform.Rotate(0, 0, Math.Round(angle));
+        Rigidbody rigid = bullet.GetComponent<Rigidbody>();
+        rigid.AddForce(bullet.GetComponent<Bullet>().speed * trajectory * 100);
+        StartCoroutine("BulletTime",bullet);
+    }
+
+    //Funzioni per coroutines
+
+    private void UsePowerUp(CoroutineData data)
+    {
+        //CoroutineData data = obj as CoroutineData;
+        if(data!=null)
+        {
+            PowerUp powerUp = data.powerUp;
+            Vector3 force = data.force;
+            NetworkVehicle net = GetComponent<NetworkVehicle>();
+            powerUp.use(net, force);
+            //yield return null;
+        }
+    }
+
+    private IEnumerator BulletTime(object obj)
+    {
+        GameObject bullet = obj as GameObject;
+        yield return new WaitForSeconds(20);
+        Destroy(bullet.gameObject);
     }
 
     //Funzioni supporto
@@ -235,8 +339,6 @@ public class PlayerController : NetworkBehaviour
         setStats(set);
         GameObject vehicle = build(set);
         vehicle.transform.SetParent(transform);
-       
-
         print("CreateVehicle Succeeded!");
     }
 
@@ -245,11 +347,7 @@ public class PlayerController : NetworkBehaviour
         //Destroy(board);
         //global.removeVehicle();
         BoxCollider collider = GetComponent<BoxCollider>();
-
-        Vector3 posNetVehicle = this.transform.position;
-
-        GameObject board = createObject(PrimitiveType.Cube, "Board", 5,1,7);//Creazione della board
-        board.transform.position = transform.position;
+        GameObject board = createObject(PrimitiveType.Cube, "Board", 5, 1, 7); //Creazione della board
         for (int i = 0; i < 4; i++) //crea 4 ruote
         {
             VehicleComponent wheel = createWheel(board, set["wheel"], i);
@@ -257,17 +355,23 @@ public class PlayerController : NetworkBehaviour
         }
         VehicleComponent engine = createEngine(board, set["engine"]);
         engine.transform.SetParent(board.transform);
-        VehicleComponent armor = createArmor(board,set["armor"]);
+        VehicleComponent armor = createArmor(set["armor"]);
         armor.transform.SetParent(board.transform);
         VehicleComponent cannon = createCannon(board, set["cannon"]);
         cannon.transform.SetParent(board.transform);
         float sizeX = board.transform.localScale.x;
         float sizeY = board.transform.localScale.y + engine.transform.localScale.y + cannon.transform.localScale.y;
         float sizeZ = board.transform.localScale.z;
-        collider.size = new Vector3(sizeX, sizeY*2, sizeZ);
-        collider.center = new Vector3(0, sizeY, 0);
-        gameObject.AddComponent<Rigidbody>();
+        collider.size = new Vector3(3*sizeX/2, 3*sizeY/2, 3*sizeZ/2);
+        collider.center = new Vector3(0, sizeY-1, 0);
+        setupRigidBody();
         return board;
+    }
+
+    private void setupRigidBody()
+    {
+        Rigidbody rigid = gameObject.AddComponent<Rigidbody>();
+        rigid.freezeRotation = true;
     }
 
     private void setStats(Dictionary<string,VehicleComponent> set)
@@ -281,8 +385,15 @@ public class PlayerController : NetworkBehaviour
 
     private VehicleComponent createCannon(GameObject board, VehicleComponent vehicleComponent)
     {
+        
         VehicleComponent cannonInstance = copyObject(vehicleComponent);
-        cannonInstance.transform.position = board.transform.position;
+        
+        cannonInstance.transform.position = new Vector3(0, 0, 0);
+        NetworkVehicle net = GetComponent<NetworkVehicle>();
+        net.spawnBullet = new GameObject("SpawnBullet");
+        //net.spawnBullet.AddComponent<Pointer>();
+        net.spawnBullet.transform.position = new Vector3(0,1,-3);
+        net.spawnBullet.transform.SetParent(cannonInstance.transform);
         cannonInstance.transform.localScale = new Vector3(1, 1, 1);
         cannonInstance.transform.localScale = 2 * cannonInstance.transform.localScale;
         float y = 3.5f * board.transform.localScale.y + 2.5f;
@@ -290,10 +401,10 @@ public class PlayerController : NetworkBehaviour
         return cannonInstance;
     }
 
-    private VehicleComponent createArmor(GameObject board, VehicleComponent vehicleComponent)
+    private VehicleComponent createArmor(VehicleComponent vehicleComponent)
     {
         VehicleComponent armorInstance = copyObject(vehicleComponent);
-        armorInstance.transform.position = board.transform.position;
+        armorInstance.transform.position = new Vector3(0, 0, 0);
         armorInstance.transform.localScale = new Vector3(6, 4, 6);
         armorInstance.transform.Translate(0, 0.5f + armorInstance.transform.localScale.y, 0);
         armorInstance.transform.localScale = armorInstance.transform.localScale / 4;
@@ -304,7 +415,7 @@ public class PlayerController : NetworkBehaviour
     private VehicleComponent createEngine(GameObject board, VehicleComponent vehicleComponent)
     {
         VehicleComponent engineInstance = copyObject(vehicleComponent);
-        engineInstance.transform.position = board.transform.position;
+        engineInstance.transform.position = new Vector3(0, 0, 0);
         engineInstance.transform.localScale = new Vector3(2, 2, 2);
         engineInstance.transform.Translate(0, engineInstance.transform.localScale.y / 2, -board.transform.localScale.z / 2);
         return engineInstance;
@@ -313,7 +424,7 @@ public class PlayerController : NetworkBehaviour
     private VehicleComponent createWheel(GameObject board, VehicleComponent component, int index)
     {
         VehicleComponent wheelInstance = copyObject(component);
-        wheelInstance.transform.position = board.transform.position;
+        wheelInstance.transform.position = new Vector3(0, 0, 0);
         wheelInstance.transform.rotation = Quaternion.Euler(90, 0, 90);
         Vector3 pos = wheelInstance.transform.position;
         wheelInstance.transform.position = setupPos(board, wheelInstance, pos, index);
@@ -355,7 +466,7 @@ public class PlayerController : NetworkBehaviour
         return Instantiate(component) as VehicleComponent;
     }
 
-    private GameObject createObject(PrimitiveType type, string name, float x, float y, float z)
+    private GameObject createObject(PrimitiveType type, string name, int x, int y, int z)
     {
         GameObject game = GameObject.CreatePrimitive(type);
         game.name = name;
@@ -383,9 +494,46 @@ public class PlayerController : NetworkBehaviour
         {
             powerUpIndex = 3;
         }
-        if(Input.GetKey(KeyCode.Mouse0) && net.powerUps.Count >= 1) //Il click sinistro del mouse permette di utilizzare il power up scelto;
+        if(Input.GetKey(KeyCode.Mouse1) && net.powerUps.Count >= 1) //Il click destro del mouse permette di utilizzare il power up scelto;
         {
-            CmdUsePowerUp(powerUpIndex);
+            Vector2 force = calcForce();
+            CmdUsePowerUp(powerUpIndex,force);
+        }
+    }
+
+    private Vector3 calcForce()
+    {
+        Vector3 axe = calcOrientationAxe();
+        Vector3 center = new Vector3(Screen.width / 2, Screen.height / 2, 0);
+        print("CENTER: " + center);
+        Vector3 mousePos = Input.mousePosition;
+        Vector3 mouseVector =mousePos - center;
+        //print(mouseVector);
+        print("MOUSE: " + mouseVector);
+        print(Input.mousePosition);
+        Vector3 throwVector =  (axe.normalized + mouseVector.normalized).normalized * mouseVector.magnitude * 10;
+
+        //print("THROW: " + throwVector);
+        //Vector3 throwVector = axe*Input.mousePosition.magnitude*10;
+        //print(throwVector);
+        return throwVector;
+    }
+
+    private Vector3 calcOrientationAxe()
+    {
+        NetworkVehicle net = GetComponent<NetworkVehicle>();
+        Vector3 spawnPos = net.spawnBullet.transform.position;
+        Vector3 netPos = net.transform.position;
+        Vector3 axe = new Vector3(spawnPos.x-netPos.x,0,spawnPos.z - netPos.z);
+        return axe;
+    }
+
+    private void ShootCommands()
+    {
+        if(Input.GetKey(KeyCode.Mouse0))
+        {
+            Vector3 trajectory = calcForce().normalized;
+            CmdShootBullet(trajectory);
         }
     }
 

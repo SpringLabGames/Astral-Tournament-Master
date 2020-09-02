@@ -4,12 +4,12 @@ using UnityEngine;
 
 public abstract class StatusPowerUp : PowerUp
 {
-    private NetworkVehicle player;
-    private GameObject status;
+    //private NetworkVehicle player;
+    //private GameObject status;
 
     protected abstract void OnStatus();
 
-    protected override void OnUsePowerUp()
+    protected override void OnUsePowerUp(NetworkVehicle net,Vector3 force)
     {
         OnStatus();
     }
@@ -17,7 +17,7 @@ public abstract class StatusPowerUp : PowerUp
     // Start is called before the first frame update
     void Start()
     {
-        player = Global.Instance.player;
+        //player = Global.Instance.player;
         //gameUI=GameObject.Find("Canvas").GetComponent<Ga>
     }
 

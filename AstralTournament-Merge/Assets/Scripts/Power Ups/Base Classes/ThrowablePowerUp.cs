@@ -7,9 +7,19 @@ public abstract class ThrowablePowerUp : PowerUp
 {
     public abstract void OnThrow(Vector3 force);
 
-    protected override void OnUsePowerUp()
+    protected override void OnUsePowerUp(NetworkVehicle net,Vector3 force)
     {
-        Vector3 force = CalcThrowVector();
+        //Vector3 force = CalcThrowVector();
+        /*GameObject tmp = new GameObject();
+        tmp.transform.position = force;
+        tmp.transform.rotation = net.transform.rotation;
+        GameObject finalTmp = new GameObject();
+        finalTmp.transform.position = tmp.transform.position + force;
+        force = finalTmp.transform.position - tmp.transform.position;
+        
+        Destroy(tmp);
+        Destroy(finalTmp);*/
+        
         OnThrow(force);
     }
 

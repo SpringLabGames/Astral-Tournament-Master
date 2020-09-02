@@ -233,8 +233,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   image: {fileID: 0}
-  forceExplosion: 0
-  radiusExplosion: 0
+  damage: 10
+  forceExplosion: 10
+  radiusExplosion: 3
   timer: 3
 --- !u!54 &3517914498828675629
 Rigidbody:

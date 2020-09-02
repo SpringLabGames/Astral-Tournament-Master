@@ -13,6 +13,7 @@ public class BluePotion : StatusPowerUp
         int tmpHelth = player.health + healthIncrement;
         if (tmpHelth <= player.maxHealth) player.health = tmpHelth;
         else player.health = player.maxHealth;
+        Destroy(gameObject);
     }
 
     // Start is called before the first frame update

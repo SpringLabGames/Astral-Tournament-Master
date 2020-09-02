@@ -24,6 +24,7 @@ public class Global : MonoBehaviour
     private static Global instance;
 
     public GameObject networkVehicle;
+    public Type defenseType;
 
     public static Global Instance
     {

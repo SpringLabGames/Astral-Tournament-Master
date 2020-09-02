@@ -7,11 +7,11 @@ public abstract class PowerUp : MonoBehaviour
 {
     public Texture image;
 
-    protected abstract void OnUsePowerUp();
+    protected abstract void OnUsePowerUp(NetworkVehicle net,Vector3 force);
 
-    public void use()
+    public void use(NetworkVehicle net, Vector3 force)
     {
-        OnUsePowerUp();
+        OnUsePowerUp(net,force);
     }
 
     // Start is called before the first frame update
