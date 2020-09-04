@@ -17,7 +17,7 @@ public class BoxPowerUp : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-
+        
     }
 
 }

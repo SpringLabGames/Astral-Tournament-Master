@@ -13,9 +13,9 @@ public class NetworkVehicle : NetworkBehaviour
     public int wheel;
     public Type defenseType;
 
-    public float drag;
+    //public float drag;
 
-    public Vector3 velocity;
+    //public Vector3 velocity;
 
     //public Vehicle vehicle;
 
@@ -37,8 +37,8 @@ public class NetworkVehicle : NetworkBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        velocity = new Vector3(0, 0, 0);
-        drag = 0.02f;
+        //velocity = new Vector3(0, 0, 0);
+        //drag = 0.02f;
         powerUps = new List<PowerUp>();
     }
 

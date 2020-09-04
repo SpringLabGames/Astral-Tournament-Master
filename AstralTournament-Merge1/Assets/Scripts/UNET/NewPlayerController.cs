@@ -15,6 +15,8 @@ public class NewPlayerController : NetworkBehaviour
     [SyncVar] public int engine;
     [SyncVar] public int wheel;
 
+    public GameObject vehiclePrefab;
+
     public float speed; //Statistiche
     public float acceleration;
     public float attack;
@@ -42,10 +44,10 @@ public class NewPlayerController : NetworkBehaviour
             CmdSetComponents(net.cannon, net.armor, net.engine, net.wheel/*,net.defenseType*/);
             global.player = net;
         }
-        else if (!hasAuthority)
+        /*else if (!hasAuthority)
         {
             createVehicle();
-        }
+        }*/
         mouseButtonPressed = false;
     }
 
@@ -54,7 +56,7 @@ public class NewPlayerController : NetworkBehaviour
     {
         if (isLocalPlayer)
         {
-            MoveCommands();
+            //MoveCommands();
             PowerUpCommands();
             ShootCommands();
         }
@@ -119,7 +121,7 @@ public class NewPlayerController : NetworkBehaviour
         this.wheel = wheel;
         this.engine = engine;
         //this.type = type;
-        if (isLocalPlayer || !isClient) createVehicle();
+        /*if (isLocalPlayer || !isClient) createVehicle();
         if (isLocalPlayer)
         {
             Vector3 rotation = transform.rotation.eulerAngles;
@@ -132,7 +134,7 @@ public class NewPlayerController : NetworkBehaviour
             position.z += 0.38f;
             camera.transform.position = position;
             camera.transform.SetParent(global.player.transform);
-        }
+        }*/
         RpcSetComponents(cannon, armor, engine, wheel/*, type*/);
     }
 
@@ -144,7 +146,7 @@ public class NewPlayerController : NetworkBehaviour
         this.wheel = wheel;
         this.engine = engine;
         //this.type = type;
-        if (isLocalPlayer)
+        /*if (isLocalPlayer)
         {
             Vector3 rotation = transform.rotation.eulerAngles;
             rotation.y += 180;
@@ -154,7 +156,7 @@ public class NewPlayerController : NetworkBehaviour
             camera.transform.position = new Vector3(0, 2.4f, 0.38f);
             camera.transform.SetParent(global.player.transform);
         }
-        createVehicle();
+        createVehicle();*/
     }
 
     [Command]
@@ -352,6 +354,15 @@ public class NewPlayerController : NetworkBehaviour
         vehicle.transform.SetParent(transform,false);
         print("CreateVehicle Succeeded!");
     }
+
+    /*public GameObject buildVehicle()
+    {
+        GameObject vehicle = Instantiate(vehiclePrefab, transform);
+
+        //global.player = vehicle.GetComponent<NetworkVehicle>();
+
+        return vehicle;
+    }*/
 
     private GameObject build(Dictionary<string, VehicleComponent> set) //assemblaggio effettivo
     {
