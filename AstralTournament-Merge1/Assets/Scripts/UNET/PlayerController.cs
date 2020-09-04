@@ -370,7 +370,7 @@ public class PlayerController : NetworkBehaviour
 
     private void setupRigidBody()
     {
-        Rigidbody rigid = gameObject.GetComponent<Rigidbody>();
+        Rigidbody rigid = gameObject.AddComponent<Rigidbody>();
         rigid.freezeRotation = true;
     }
 
