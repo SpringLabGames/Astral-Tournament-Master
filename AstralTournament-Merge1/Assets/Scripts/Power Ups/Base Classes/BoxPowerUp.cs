@@ -1,12 +1,11 @@
-﻿using Prototype.NetworkLobby;
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Networking;
 
 public class BoxPowerUp : MonoBehaviour
 {
-    private LobbyManager netManager;
+    private CustomManager netManager;
 
     // Start is called before the first frame update
     void Start()

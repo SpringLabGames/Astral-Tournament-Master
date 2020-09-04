@@ -1,5 +1,4 @@
 ﻿
-using Prototype.NetworkLobby;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -27,11 +26,11 @@ public class SetupLocalPlayer : NetworkBehaviour
 
     public Vector3 velocity;
 
-    public LobbyManager netManager;
+    public CustomManager netManager;
 
     void Start()
     {
-        netManager = GameObject.Find("LobbyManager").GetComponent<LobbyManager>();
+        netManager = GameObject.Find("NetworkManager").GetComponent<CustomManager>();
         print("CREAZIONE PLAYER");
         velocity = new Vector3(0, 0, 0);
         drag = 0.02f;
