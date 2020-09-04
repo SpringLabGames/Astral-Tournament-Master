@@ -1,12 +1,13 @@
-﻿using System;
+﻿using Prototype.NetworkLobby;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Networking;
 
-public class PlayerController : NetworkBehaviour
+public class NewPlayerController : NetworkBehaviour
 {
-    private CustomManager netManager;
+    private LobbyManager netManager;
     private Global global;
 
     [SyncVar] public int cannon; //Componenti
@@ -33,12 +34,12 @@ public class PlayerController : NetworkBehaviour
         global = Global.Instance;
         global.player = GetComponent<NetworkVehicle>();
         initMovementThings();
-        netManager = GameObject.Find("NetworkManager").GetComponent<CustomManager>();
+        netManager = GameObject.Find("LobbyManager").GetComponent<LobbyManager>();
         if (isLocalPlayer)
         {
             print("LOCAL CLIENT!");
             NetworkVehicle net = GetComponent<NetworkVehicle>();
-            CmdSetComponents(net.cannon, net.armor, net.engine, net.wheel,net.defenseType);
+            CmdSetComponents(net.cannon, net.armor, net.engine, net.wheel/*,net.defenseType*/);
             global.player = net;
         }
         else if (!hasAuthority)
@@ -108,42 +109,52 @@ public class PlayerController : NetworkBehaviour
         Destroy(collider);
     }
 
+
     [Command]
-    public void CmdSetComponents(int cannon, int armor, int engine, int wheel, Type type)
+    public void CmdSetComponents(int cannon, int armor, int engine, int wheel/*, Type type*/)
     {
+
+        print("CMD SET COMPONENT");
         this.cannon = cannon;
-        this.armor = armor;
-        this.engine = engine;
         this.wheel = wheel;
-        this.defenseType = type;
-        print("CreateVehicle() Command...");
-        if (!isClient)
+        this.engine = engine;
+        //this.type = type;
+        if (isLocalPlayer || !isClient) createVehicle();
+        if (isLocalPlayer)
         {
-            createVehicle();
-            transform.Rotate(0, 180, 0);
+            Vector3 rotation = transform.rotation.eulerAngles;
+            rotation.y += 180;
+            transform.rotation = Quaternion.Euler(rotation);
+
+            Camera camera = GameObject.Find("Main Camera").GetComponent<Camera>();
+            Vector3 position = transform.position;
+            position.y += 2.4f;
+            position.z += 0.38f;
+            camera.transform.position = position;
+            camera.transform.SetParent(global.player.transform);
         }
-        RpcSetComponents(cannon, armor, engine, wheel,type);
+        RpcSetComponents(cannon, armor, engine, wheel/*, type*/);
     }
 
     [ClientRpc]
-    public void RpcSetComponents(int cannon, int armor, int engine, int wheel,Type type)
+    public void RpcSetComponents(int cannon, int armor, int engine, int wheel/*, Type type*/)
     {
-        print("CANNONS: " + this.cannon + "----" + cannon);
+        print("RPC SET COMPONENT");
         this.cannon = cannon;
-        print("CANNON DOPO:" + this.cannon);
-        this.armor = armor;
-        this.engine = engine;
         this.wheel = wheel;
-        this.defenseType = type;
-        print("createVehicle RPC...");
-        createVehicle();
-        transform.Rotate(0, 180, 0);
+        this.engine = engine;
+        //this.type = type;
         if (isLocalPlayer)
         {
+            Vector3 rotation = transform.rotation.eulerAngles;
+            rotation.y += 180;
+            transform.rotation = Quaternion.Euler(rotation);
+
             Camera camera = GameObject.Find("Main Camera").GetComponent<Camera>();
             camera.transform.position = new Vector3(0, 2.4f, 0.38f);
             camera.transform.SetParent(global.player.transform);
         }
+        createVehicle();
     }
 
     [Command]
@@ -328,7 +339,7 @@ public class PlayerController : NetworkBehaviour
 
     private void createVehicle()
     {
-       // netManager = GameObject.Find("NetworkManager").GetComponent<CustomManager>();
+       
         List<GameObject> prefab = netManager.componentPrefabs;
         print("WHEEL: " + prefab[wheel]);
         Dictionary<string, VehicleComponent> set = new Dictionary<string, VehicleComponent>();
@@ -338,7 +349,7 @@ public class PlayerController : NetworkBehaviour
         set.Add("engine", prefab[engine].GetComponent<VehicleComponent>());
         setStats(set);
         GameObject vehicle = build(set);
-        vehicle.transform.SetParent(transform);
+        vehicle.transform.SetParent(transform,false);
         print("CreateVehicle Succeeded!");
     }
 
@@ -370,7 +381,7 @@ public class PlayerController : NetworkBehaviour
 
     private void setupRigidBody()
     {
-        Rigidbody rigid = gameObject.AddComponent<Rigidbody>();
+        Rigidbody rigid = gameObject.GetComponent<Rigidbody>();
         rigid.freezeRotation = true;
     }
 

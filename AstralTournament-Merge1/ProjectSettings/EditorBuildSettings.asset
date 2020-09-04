@@ -30,21 +30,24 @@ EditorBuildSettings:
     path: Assets/Scenes/SelectCharacter.unity
     guid: 064fb32b20e188841ba593df7fe07246
   - enabled: 1
-    path: Assets/Scenes/VehicleMovement.unity
-    guid: 76ea656777451a94a88277a6d503bf2b
-  - enabled: 1
-    path: Assets/Scenes/MatchmakeScene.unity
-    guid: 136362385139003498c45e025cfc1984
-  - enabled: 0
-    path: Assets/Scenes/NetworkTest.unity
-    guid: 0161d555d46778443a9000011473e7ad
-  - enabled: 0
-    path: Assets/Scenes/NetTestMarco.unity
-    guid: a8e972f088ceb3e4fb5c53cb71baf513
-  - enabled: 1
-    path: Assets/Scenes/TestMoviNet.unity
-    guid: df0596d95403b414eadb153cf2faa76d
+    path: Assets/Scenes/LobbyScene.unity
+    guid: 9e918329f59de4442a8cd864d58f9dfe
   - enabled: 1
     path: Assets/Scenes/Arena.unity
     guid: 90cc4436063f77840a510dfcccc80652
+  - enabled: 0
+    path: Assets/Scenes/VehicleMovement.unity
+    guid: 76ea656777451a94a88277a6d503bf2b
+  - enabled: 0
+    path: Assets/Scenes/MatchmakeScene.unity
+    guid: 136362385139003498c45e025cfc1984
+  - enabled: 0
+    path: 
+    guid: 00000000000000000000000000000000
+  - enabled: 0
+    path: 
+    guid: 00000000000000000000000000000000
+  - enabled: 0
+    path: Assets/Scenes/TestMoviNet.unity
+    guid: df0596d95403b414eadb153cf2faa76d
   m_configObjects: {}

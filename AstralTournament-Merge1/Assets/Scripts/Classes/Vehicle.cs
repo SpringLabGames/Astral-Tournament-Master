@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Prototype.NetworkLobby;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -94,7 +95,7 @@ public class Vehicle : MonoBehaviour
     {
         bool end = false;
         int index = -1;
-        CustomManager netManager = GameObject.Find("NetworkManager").GetComponent<CustomManager>();
+        LobbyManager netManager = GameObject.Find("LobbyManager").GetComponent<LobbyManager>();
         for (int i = 0; i < netManager.componentPrefabs.Count && !end; i++)
         {
             //print(comp + " -- " + netManager.spawnPrefabs[i]);

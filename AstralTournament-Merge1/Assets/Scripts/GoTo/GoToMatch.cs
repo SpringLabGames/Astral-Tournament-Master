@@ -31,7 +31,7 @@ public class GoToMatch : MonoBehaviour
         arena.transform.SetParent(null);
         DontDestroyOnLoad(arena);*/
         //SceneManager.LoadScene("MatchmakeScene");
-        SceneManager.LoadScene("MatchmakeScene");
+        SceneManager.LoadScene("LobbyScene");
     }
 
     // Update is called once per frame
