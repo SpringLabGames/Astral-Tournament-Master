@@ -23,7 +23,8 @@ public class PlayClick : MonoBehaviour // classe che indica i bottoni del menu (
     {
         global.mode = button.GetComponentInChildren<TMP_Text>().text;
         //DontDestroyOnLoad(mode);
-        SceneManager.LoadScene("SelectCharacter", LoadSceneMode.Single);
+        if(button.gameObject.name.Equals("StoreButton")) SceneManager.LoadScene("StoreScene", LoadSceneMode.Single);
+        else SceneManager.LoadScene("SelectCharacter", LoadSceneMode.Single);
     }
 
     private string getText() 

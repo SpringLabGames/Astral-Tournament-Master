@@ -38,6 +38,9 @@ EditorBuildSettings:
   - enabled: 0
     path: Assets/Scenes/VehicleMovement.unity
     guid: 76ea656777451a94a88277a6d503bf2b
+  - enabled: 1
+    path: Assets/Scenes/StoreScene.unity
+    guid: 6da13bc0d0f73c346a88f746729c6767
   - enabled: 0
     path: Assets/Scenes/MatchmakeScene.unity
     guid: 136362385139003498c45e025cfc1984

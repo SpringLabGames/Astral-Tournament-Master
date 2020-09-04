@@ -6,6 +6,7 @@ TagManager:
   tags:
   - Dirt
   - SpawnPoint
+  - Music
   layers:
   - Default
   - TransparentFX
