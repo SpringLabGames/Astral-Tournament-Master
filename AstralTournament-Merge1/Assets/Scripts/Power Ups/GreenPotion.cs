@@ -22,9 +22,9 @@ public class GreenPotion : StatusPowerUp
     private IEnumerator StatusTime()
     {   
         player.status = material.mainTexture;
-        player.GetComponent<PlayerController>().defense += defenseIncrease;
+        player.GetComponent<NewPlayerController>().defense += defenseIncrease;
         yield return new WaitForSeconds(timer);
-        player.GetComponent<PlayerController>().defense -= defenseIncrease;
+        player.GetComponent<NewPlayerController>().defense -= defenseIncrease;
         player.status = null;
         Destroy(gameObject);
     }

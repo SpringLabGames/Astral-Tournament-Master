@@ -63,17 +63,21 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Assets\Lobby\Scripts\DraggablePanel.cs" />
+    <Compile Include="Assets\Lobby\Scripts\EventSystemChecker.cs" />
+    <Compile Include="Assets\Lobby\Scripts\Lobby\LobbyCountdownPanel.cs" />
+    <Compile Include="Assets\Lobby\Scripts\Lobby\LobbyHook.cs" />
+    <Compile Include="Assets\Lobby\Scripts\Lobby\LobbyInfoPanel.cs" />
+    <Compile Include="Assets\Lobby\Scripts\Lobby\LobbyMainMenu.cs" />
+    <Compile Include="Assets\Lobby\Scripts\Lobby\LobbyManager.cs" />
+    <Compile Include="Assets\Lobby\Scripts\Lobby\LobbyPlayer.cs" />
+    <Compile Include="Assets\Lobby\Scripts\Lobby\LobbyPlayerList.cs" />
+    <Compile Include="Assets\Lobby\Scripts\Lobby\LobbyServerEntry.cs" />
+    <Compile Include="Assets\Lobby\Scripts\Lobby\LobbyServerList.cs" />
+    <Compile Include="Assets\Lobby\Scripts\Lobby\LobbyTopPanel.cs" />
     <Compile Include="Assets\Packages\UnityFBXExporter\FBXExporter.cs" />
     <Compile Include="Assets\Packages\UnityFBXExporter\FBXUnityMaterialGetter.cs" />
     <Compile Include="Assets\Packages\UnityFBXExporter\FBXUnityMeshGetter.cs" />
-    <Compile Include="Assets\SampleScenes\Menu\Scripts\MenuSceneLoader.cs" />
-    <Compile Include="Assets\SampleScenes\Menu\Scripts\PauseMenu.cs" />
-    <Compile Include="Assets\SampleScenes\Menu\Scripts\SceneAndURLLoader.cs" />
-    <Compile Include="Assets\SampleScenes\Scripts\CameraSwitch.cs" />
-    <Compile Include="Assets\SampleScenes\Scripts\LevelReset.cs" />
-    <Compile Include="Assets\SampleScenes\Scripts\ParticleSceneControls.cs" />
-    <Compile Include="Assets\SampleScenes\Scripts\PlaceTargetWithMouse.cs" />
-    <Compile Include="Assets\SampleScenes\Scripts\SlowMoButton.cs" />
     <Compile Include="Assets\Scripts\AI\FiniteStateMachineBase.cs" />
     <Compile Include="Assets\Scripts\Assemble.cs" />
     <Compile Include="Assets\Scripts\BackgroundMusic.cs" />
@@ -120,32 +124,27 @@
     <Compile Include="Assets\Scripts\UNET\CoroutineData.cs" />
     <Compile Include="Assets\Scripts\UNET\CustomManager.cs" />
     <Compile Include="Assets\Scripts\UNET\NetworkVehicle.cs" />
-    <Compile Include="Assets\Scripts\UNET\PlayerController.cs" />
+    <Compile Include="Assets\Scripts\UNET\NewPlayerController.cs" />
     <Compile Include="Assets\Scripts\UNET\PlayerMessage.cs" />
     <Compile Include="Assets\Scripts\UNET\SetupLocalPlayer.cs" />
     <Compile Include="Assets\Scripts\UNET\SetupNetwork.cs" />
     <Compile Include="Assets\Scripts\UNET\SetupSpawnable.cs" />
-    <None Include="Assets\ScriptTemplates\54-Mirror__Network Room Manager-NewNetworkRoomManager.cs.txt" />
-    <None Include="Assets\ScriptTemplates\55-Mirror__Network Room Player-NewNetworkRoomPlayer.cs.txt" />
     <None Include="Assets\TextMesh Pro\Resources\Shaders\TMP_SDF-Surface-Mobile.shader" />
     <None Include="Assets\TextMesh Pro\Resources\LineBreaking Leading Characters.txt" />
     <None Include="Assets\WorldMaterialsFree\WorldMatLiteFree.shader" />
     <None Include="Assets\Scripts\StreamingAssets\TestResults.xml" />
+    <None Include="Assets\Lobby\Documentation.txt" />
     <None Include="Assets\TextMesh Pro\Resources\Shaders\TMPro_Properties.cginc" />
+    <None Include="Assets\Lobby\Instruction.txt" />
     <None Include="Assets\TextMesh Pro\Resources\Shaders\TMP_Bitmap-Custom-Atlas.shader" />
-    <None Include="Assets\ScriptTemplates\56-Mirror__Network Discovery-NewNetworkDiscovery.cs.txt" />
     <None Include="Assets\TextMesh Pro\Resources\LineBreaking Following Characters.txt" />
     <None Include="Assets\TextMesh Pro\Sprites\EmojiOne Attribution.txt" />
     <None Include="Assets\TextMesh Pro\Resources\Shaders\TMP_SDF-Mobile Masking.shader" />
-    <None Include="Assets\ScriptTemplates\50-Mirror__Network Manager-NewNetworkManager.cs.txt" />
-    <None Include="Assets\ScriptTemplates\53-Mirror__Network Observer-NewNetworkObserver.cs.txt" />
     <None Include="Assets\TextMesh Pro\Resources\Shaders\TMP_Bitmap-Mobile.shader" />
-    <None Include="Assets\ScriptTemplates\52-Mirror__Network Behaviour-NewNetworkBehaviour.cs.txt" />
     <None Include="Assets\TextMesh Pro\Resources\Shaders\TMP_SDF Overlay.shader" />
     <None Include="Assets\TextMesh Pro\Fonts\LiberationSans - OFL.txt" />
     <None Include="Assets\TextMesh Pro\Resources\Shaders\TMPro_Surface.cginc" />
     <None Include="Assets\TextMesh Pro\Resources\Shaders\TMP_SDF-Mobile Overlay.shader" />
-    <None Include="Assets\ScriptTemplates\51-Mirror__Network Authenticator-NewNetworkAuthenticator.cs.txt" />
     <None Include="Assets\TextMesh Pro\Resources\Shaders\TMP_Bitmap.shader" />
     <None Include="Assets\TextMesh Pro\Resources\Shaders\TMPro.cginc" />
     <None Include="Assets\TextMesh Pro\Resources\Shaders\TMP_SDF.shader" />
@@ -153,21 +152,20 @@
     <None Include="Assets\TextMesh Pro\Resources\Shaders\TMP_SDF-Mobile.shader" />
     <None Include="Assets\TextMesh Pro\Resources\Shaders\TMP_Sprite.shader" />
     <None Include="Assets\TextMesh Pro\Resources\Shaders\TMP_SDF-Surface.shader" />
-    <None Include="Assets\SampleScenes\Shaders\Skybox-Procedural.shader" />
     <Reference Include="Unity.TextMeshPro.Editor">
-      <HintPath>D:/Progetti/Unity/master/Astral-Tournament-Master/AstralTournament-Merge/Library/ScriptAssemblies/Unity.TextMeshPro.Editor.dll</HintPath>
+      <HintPath>C:/Users/rizzi/Desktop/Astral-Tournament-Master/AstralTournament-Merge/Library/ScriptAssemblies/Unity.TextMeshPro.Editor.dll</HintPath>
     </Reference>
     <Reference Include="Unity.PackageManagerUI.Editor">
-      <HintPath>D:/Progetti/Unity/master/Astral-Tournament-Master/AstralTournament-Merge/Library/ScriptAssemblies/Unity.PackageManagerUI.Editor.dll</HintPath>
+      <HintPath>C:/Users/rizzi/Desktop/Astral-Tournament-Master/AstralTournament-Merge/Library/ScriptAssemblies/Unity.PackageManagerUI.Editor.dll</HintPath>
     </Reference>
     <Reference Include="Unity.CollabProxy.Editor">
-      <HintPath>D:/Progetti/Unity/master/Astral-Tournament-Master/AstralTournament-Merge/Library/ScriptAssemblies/Unity.CollabProxy.Editor.dll</HintPath>
+      <HintPath>C:/Users/rizzi/Desktop/Astral-Tournament-Master/AstralTournament-Merge/Library/ScriptAssemblies/Unity.CollabProxy.Editor.dll</HintPath>
     </Reference>
     <Reference Include="Unity.TextMeshPro">
-      <HintPath>D:/Progetti/Unity/master/Astral-Tournament-Master/AstralTournament-Merge/Library/ScriptAssemblies/Unity.TextMeshPro.dll</HintPath>
+      <HintPath>C:/Users/rizzi/Desktop/Astral-Tournament-Master/AstralTournament-Merge/Library/ScriptAssemblies/Unity.TextMeshPro.dll</HintPath>
     </Reference>
     <Reference Include="Unity.Analytics.DataPrivacy">
-      <HintPath>D:/Progetti/Unity/master/Astral-Tournament-Master/AstralTournament-Merge/Library/ScriptAssemblies/Unity.Analytics.DataPrivacy.dll</HintPath>
+      <HintPath>C:/Users/rizzi/Desktop/Astral-Tournament-Master/AstralTournament-Merge/Library/ScriptAssemblies/Unity.Analytics.DataPrivacy.dll</HintPath>
     </Reference>
     <Reference Include="UnityEngine.AIModule">
       <HintPath>C:/Program Files/Unity/Hub/Editor/2018.4.26f1/Editor/Data/Managed/UnityEngine/UnityEngine.AIModule.dll</HintPath>
@@ -371,7 +369,7 @@
       <HintPath>C:/Program Files/Unity/Hub/Editor/2018.4.26f1/Editor/Data/UnityExtensions/Unity/UnitySpatialTracking/RuntimeEditor/UnityEngine.SpatialTracking.dll</HintPath>
     </Reference>
     <Reference Include="Unity.Analytics.StandardEvents">
-      <HintPath>D:/Progetti/Unity/master/Astral-Tournament-Master/AstralTournament-Merge/Library/PackageCache/com.unity.analytics@3.2.3/AnalyticsStandardEvents/Unity.Analytics.StandardEvents.dll</HintPath>
+      <HintPath>C:/Users/rizzi/Desktop/Astral-Tournament-Master/AstralTournament-Merge/Library/PackageCache/com.unity.analytics@3.2.3/AnalyticsStandardEvents/Unity.Analytics.StandardEvents.dll</HintPath>
     </Reference>
     <Reference Include="netstandard">
       <HintPath>C:/Program Files/Unity/Hub/Editor/2018.4.26f1/Editor/Data/NetStandard/ref/2.0.0/netstandard.dll</HintPath>
