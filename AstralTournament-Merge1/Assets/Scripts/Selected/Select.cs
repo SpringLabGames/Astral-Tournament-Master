@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -21,6 +22,8 @@ public class Select : MonoBehaviour
 
     public static bool changed;
 
+    private TMP_Text nameSelected;
+
     public VehicleComponent getSelected()
     {
         return selected;
@@ -29,6 +32,7 @@ public class Select : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        nameSelected = GameObject.Find("Selectors/" + name + "/Panel/Desc").GetComponent<TMP_Text>();
         first = false;
         set = new Dictionary<string, VehicleComponent>();
         changed= false;
@@ -65,8 +69,8 @@ public class Select : MonoBehaviour
     {
         //print(images[current]);
         //changed = true;
-        
-        choice.texture = images[current].GetComponent<Renderer>().sharedMaterial.mainTexture;
+        nameSelected.text = selected.name;
+        //choice.texture = images[current].GetComponent<Renderer>().sharedMaterial.mainTexture;
         
         if (!set.ContainsKey(key)) set.Add(key, selected);
         else set[key] = selected;

@@ -49,6 +49,9 @@ public class Vehicle : MonoBehaviour
         else net =Resources.Load<GameObject>("Prefabs/NetVehicle").GetComponent<NetworkVehicle>();
         DontDestroyOnLoad(net);
         global.networkVehicle = net.gameObject;
+        this.transform.Rotate(0, 230, 0);
+        
+        
         //global.networkVehicle = net;
         //print(net);
     }
@@ -68,7 +71,11 @@ public class Vehicle : MonoBehaviour
             //set = Select.getSet();
             Destroy(board);     //se è già presente un veicolo assemblato, questo viene distrutto e rimosso da Global
             //global.removeVehicle();
-            board=build(set); // costruzione effettiva
+
+            //board=build(set); // costruzione effettiva
+            board = buildVehicle(set);
+            board.transform.SetParent(this.transform);
+            board.transform.localScale = new Vector3(5, 5, 5);
             adjustVehicleForUI(); //prepara il veicolo costruito per essere mostrato nell'UI
             setStats(set); //aggiorna le statistiche nel tabellone dell'UI
             //global.addVehicle(GetComponent<Vehicle>());
@@ -108,23 +115,46 @@ public class Vehicle : MonoBehaviour
         return index;
     }
 
-    public GameObject build(Dictionary<string,VehicleComponent> set) //assemblaggio effettivo
+ 
+
+    public GameObject buildVehicle(Dictionary<string, VehicleComponent> set)
     {
-        //Destroy(board);
-        //global.removeVehicle();
-        GameObject board = createObject(PrimitiveType.Cube, "Board", 5, 1, 7); //Creazione della board
-        for (int i = 0; i < 4; i++) //crea 4 ruote
+        GameObject reference = new GameObject("Reference");
+        GameObject board = Instantiate<GameObject>(Resources.Load<GameObject>("Prefabs/Components/Board"), reference.transform);
+        VehicleComponent cannon = Instantiate<VehicleComponent>(set["cannon"], reference.transform);
+        VehicleComponent armor = Instantiate<VehicleComponent>(set["armor"], reference.transform);
+        VehicleComponent engine = Instantiate<VehicleComponent>(set["engine"],reference.transform);
+
+        for (int i=0; i<4; i++)
         {
-            wheel = createWheel(board,set["wheel"], i);
-            wheel.transform.SetParent(board.transform);
+            VehicleComponent wheel = buildWheel(set["wheel"], i, reference.transform);
+             
         }
-        engine = createEngine(board,set["engine"]);
-        engine.transform.SetParent(board.transform);
-        armor = createArmor(set["armor"]);
-        armor.transform.SetParent(board.transform);
-        cannon = createCannon(board,set["cannon"]);
-        cannon.transform.SetParent(board.transform);
-        return board;
+
+        return reference;
+        
+    }
+
+    private VehicleComponent buildWheel(VehicleComponent wheel, int i, Transform parent)
+    {
+       
+        VehicleComponent buildwheel = Instantiate<VehicleComponent>(wheel, parent);
+         if( i ==   1 )
+        {//top right;
+            buildwheel.transform.position = new Vector3(2.45105f, -0.004784107f, 1.956946f);
+            buildwheel.transform.Rotate(0, 0, -180);
+        }
+        else if( i == 2)
+        {//bottom left
+            buildwheel.transform.position = new Vector3(-2.463034f, 0.0188747f, -2.8425256f);
+        }
+        else if( i == 3 )
+        { //bottom right
+            buildwheel.transform.position = new Vector3(2.45105f, -0.004784107f, -2.863177f);
+            buildwheel.transform.Rotate(0, 0, -180);
+        }
+
+        return buildwheel;
     }
 
     private GameObject createNetVehicle()
@@ -147,8 +177,8 @@ public class Vehicle : MonoBehaviour
         //passStats(board.GetComponent<Vehicle>(), this);
         board.transform.position = transform.position;
         board.transform.rotation = transform.rotation;
-        board.transform.SetParent(transform);
-        board.transform.localScale = 3 * board.transform.localScale;
+        //board.transform.SetParent(transform);
+       // board.transform.localScale = 3 * board.transform.localScale;
     }
 
     private void passStats(Vehicle game,Vehicle astroMachine)
