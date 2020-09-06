@@ -78,6 +78,7 @@
     <Compile Include="Assets\Packages\UnityFBXExporter\FBXExporter.cs" />
     <Compile Include="Assets\Packages\UnityFBXExporter\FBXUnityMaterialGetter.cs" />
     <Compile Include="Assets\Packages\UnityFBXExporter\FBXUnityMeshGetter.cs" />
+    <Compile Include="Assets\PowerUpsSpawner.cs" />
     <Compile Include="Assets\PreviousScene.cs" />
     <Compile Include="Assets\SampleScenes\Menu\Scripts\MenuSceneLoader.cs" />
     <Compile Include="Assets\SampleScenes\Menu\Scripts\PauseMenu.cs" />

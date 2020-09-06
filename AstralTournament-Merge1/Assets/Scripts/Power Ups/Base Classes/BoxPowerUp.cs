@@ -17,7 +17,16 @@ public class BoxPowerUp : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+        transform.RotateAroundLocal(Vector3.up, Time.deltaTime);
+    }
+
+    private void OnDestroy()
+    {
+        if (transform.parent != null)
+        {
+            PowerUpsSpawner pus = transform.parent.GetComponent<PowerUpsSpawner>();
+            if (pus != null) { pus.Start(); }
+        }
     }
 
 }

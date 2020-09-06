@@ -133,6 +133,9 @@ namespace Prototype.NetworkLobby
 
 
         #endregion
+
+
+
         public override void OnLobbyClientSceneChanged(NetworkConnection conn)
         {
             if (SceneManager.GetSceneAt(0).name == lobbyScene)
@@ -288,7 +291,11 @@ namespace Prototype.NetworkLobby
         }
 
 
-
+        public void OnSpawnPowerUpBox(int prefabIndex, Transform parent)
+        {
+            GameObject powerUp = Instantiate(spawnPrefabs[prefabIndex], parent.position + (Vector3.up * 1.5f), parent.rotation * Quaternion.AngleAxis(45f, Vector3.right), parent);
+            NetworkServer.Spawn(powerUp);
+        }
 
         public void KickedMessageHandler(NetworkMessage netMsg)
         {
@@ -453,6 +460,8 @@ namespace Prototype.NetworkLobby
             ServerChangeScene(playScene);
         }
 
+
+        #region ClientCallbacks
         // ----------------- Client callbacks ------------------
 
         public override void OnClientConnect(NetworkConnection conn)
@@ -483,5 +492,6 @@ namespace Prototype.NetworkLobby
             ChangeTo(mainMenuPanel);
             infoPanel.Display("Cient error : " + (errorCode == 6 ? "timeout" : errorCode.ToString()), "Close", null);
         }
+        #endregion
     }
 }

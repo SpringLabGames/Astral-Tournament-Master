@@ -59,13 +59,17 @@ public class CarMovements :  NetworkBehaviour
             foreach (WheelCollider wheel in steeringWheels)
             {
                 wheel.steerAngle = maxTurn * im.steer;
-                wheel.transform.localEulerAngles = new Vector3(0f, im.steer * maxTurn, 90f); //il figlio del wheelcollider è il mesh della ruota che deve ruotare
+                float angle = 0;
+                if (wheel.name[wheel.name.Length - 1] == '1') angle = 180;
+                wheel.transform.localEulerAngles = new Vector3(0f, angle + im.steer * maxTurn, 90f); //il figlio del wheelcollider è il mesh della ruota che deve ruotare
 
             }
 
             foreach (GameObject mesh in meshes)
             {
-                mesh.transform.Rotate(0f, rb.velocity.magnitude * (transform.InverseTransformDirection(rb.velocity).z >= 0 ? 1 : -1) / (2 * Mathf.PI * .2f), 0f);
+                int a = 1;
+                if (mesh.name[mesh.name.Length - 1] == '2') a = -1;
+                mesh.transform.Rotate(0f, a* rb.velocity.magnitude * (transform.InverseTransformDirection(rb.velocity).z >= 0 ? 1 : -1) / (2 * Mathf.PI * .2f), 0f);
             }
         }
     }

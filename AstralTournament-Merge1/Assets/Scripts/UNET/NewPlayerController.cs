@@ -394,6 +394,10 @@ public class NewPlayerController : NetworkBehaviour
             wheelColliders.Add(wheel.GetComponent<WheelCollider>());
             if (i<=1) steerWheels.Add(wheel.GetComponent<WheelCollider>());
             center.transform.position += wheel.transform.position;
+
+            WheelCollider collider = wheel.GetComponent<WheelCollider>();
+            collider.radius = 0.63f;
+            collider.center = new Vector3(0, 0, 0);
         }
         center.transform.position /= 9;
         center.transform.SetParent(transform);
@@ -413,26 +417,31 @@ public class NewPlayerController : NetworkBehaviour
         /*float sizeX = board.transform.localScale.x;
         float sizeY = board.transform.localScale.y + engine.transform.localScale.y + cannon.transform.localScale.y;
         float sizeZ = board.transform.localScale.z;*/
-        collider.size = new Vector3(7, 4, 6);
-        collider.center = new Vector3(0, 2.5f, 0);
+        collider.size = new Vector3(6.2940347f,2.506618f,6.808867f);
+        collider.center = new Vector3(-0.05883098f,0.4f,-0.4374144f);
     }
 
     private VehicleComponent buildWheel(VehicleComponent wheel, int i, Transform parent)
     {
 
         VehicleComponent buildwheel = Instantiate<VehicleComponent>(wheel, parent);
-        if (i == 1)
+        if (i==0)
+        {
+            //top left;
+            buildwheel.transform.position = new Vector3(-2.463034f, 0.0188747f, 1.956946f);
+        }
+        else if (i == 1)
         {//top right;
-            buildwheel.transform.position = new Vector3(2.45105f, -0.004784107f, 1.956946f);
+            buildwheel.transform.position = new Vector3(2.463034f, 0.0188747f, 1.956946f);
             buildwheel.transform.Rotate(0, 0, -180);
         }
-        else if (i == 2)
+        else if (i == 2 )
         {//bottom left
             buildwheel.transform.position = new Vector3(-2.463034f, 0.0188747f, -2.8425256f);
         }
         else if (i == 3)
         { //bottom right
-            buildwheel.transform.position = new Vector3(2.45105f, -0.004784107f, -2.863177f);
+            buildwheel.transform.position = new Vector3(2.463034f, 0.0188747f, -2.8425256f);
             buildwheel.transform.Rotate(0, 0, -180);
         }
 
