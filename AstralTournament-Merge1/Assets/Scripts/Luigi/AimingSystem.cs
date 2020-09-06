@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.Networking;
+using Prototype.NetworkLobby;
 
 public class AimingSystem : NetworkBehaviour
 {
@@ -19,6 +20,8 @@ public class AimingSystem : NetworkBehaviour
     private void Start()
     {
         crossHairGO = GameObject.Find("crosshair");
+        cannon = null;
+        tower = null;
     }
 
     // Update is called once per frame
@@ -26,18 +29,31 @@ public class AimingSystem : NetworkBehaviour
     {
         if (isLocalPlayer)
         {
+            string cannonName = getCannonName();
+            print(cannonName);
+            GameObject cannonObj = GameObject.Find("LocalVehicle/Reference/"+cannonName+"(Clone)/CannonCane");
+            GameObject towerObj = GameObject.Find("LocalVehicle/Reference/"+cannonName+"(Clone)");
+            
+            if (cannonObj == null || towerObj == null) return;
+            cannon = cannonObj.transform;
+            tower = towerObj.transform;
             rotateTower();
             rotateCannon();
             moveCrosshair();
         }
     }
 
+    private string getCannonName()
+    {
+        LobbyManager lobby = GameObject.Find("LobbyManager").GetComponent<LobbyManager>();
+        NetworkVehicle net = GetComponent<NetworkVehicle>();
+        return lobby.componentPrefabs[net.cannon].name;
+    }
+
     void rotateTower()
     {
-
         //towerAngle += Input.GetAxis("Mouse X") * towerSpeed * -Time.deltaTime;
         //tower.localRotation = Quaternion.AngleAxis(-towerAngle, Vector3.up);
-
         Ray cameraRay = Camera.main.ScreenPointToRay(Input.mousePosition);
         Plane ground = new Plane(Vector3.up, Vector3.zero);
         float rayLength;

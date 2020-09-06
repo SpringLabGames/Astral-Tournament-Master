@@ -15,7 +15,7 @@ public class NewPlayerController : NetworkBehaviour
     [SyncVar] public int engine;
     [SyncVar] public int wheel;
 
-    public GameObject vehiclePrefab;
+    //public GameObject vehiclePrefab;
 
     public float speed; //Statistiche
     public float acceleration;
@@ -23,6 +23,10 @@ public class NewPlayerController : NetworkBehaviour
     public float defense;
     public float maneuverability;
     public Type defenseType;
+
+    private List<WheelCollider> wheelColliders;
+    private List<WheelCollider> steerWheels;
+    private List<GameObject> wheels;
 
     private bool mouseButtonPressed;
 
@@ -33,12 +37,16 @@ public class NewPlayerController : NetworkBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        wheelColliders = new List<WheelCollider>();
+        steerWheels = new List<WheelCollider>();
+        wheels = new List<GameObject>();
         global = Global.Instance;
         global.player = GetComponent<NetworkVehicle>();
         initMovementThings();
         netManager = GameObject.Find("LobbyManager").GetComponent<LobbyManager>();
         if (isLocalPlayer)
         {
+            name = "LocalVehicle";
             print("LOCAL CLIENT!");
             NetworkVehicle net = GetComponent<NetworkVehicle>();
             CmdSetComponents(net.cannon, net.armor, net.engine, net.wheel/*,net.defenseType*/);
@@ -121,7 +129,7 @@ public class NewPlayerController : NetworkBehaviour
         this.wheel = wheel;
         this.engine = engine;
         //this.type = type;
-        /*if (isLocalPlayer || !isClient) createVehicle();
+        if (isLocalPlayer || !isClient) createVehicle();
         if (isLocalPlayer)
         {
             Vector3 rotation = transform.rotation.eulerAngles;
@@ -134,7 +142,7 @@ public class NewPlayerController : NetworkBehaviour
             position.z += 0.38f;
             camera.transform.position = position;
             camera.transform.SetParent(global.player.transform);
-        }*/
+        }
         RpcSetComponents(cannon, armor, engine, wheel/*, type*/);
     }
 
@@ -146,7 +154,7 @@ public class NewPlayerController : NetworkBehaviour
         this.wheel = wheel;
         this.engine = engine;
         //this.type = type;
-        /*if (isLocalPlayer)
+        if (isLocalPlayer)
         {
             Vector3 rotation = transform.rotation.eulerAngles;
             rotation.y += 180;
@@ -156,7 +164,7 @@ public class NewPlayerController : NetworkBehaviour
             camera.transform.position = new Vector3(0, 2.4f, 0.38f);
             camera.transform.SetParent(global.player.transform);
         }
-        createVehicle();*/
+        createVehicle();
     }
 
     [Command]
@@ -350,7 +358,7 @@ public class NewPlayerController : NetworkBehaviour
         set.Add("armor", prefab[armor].GetComponent<VehicleComponent>());
         set.Add("engine", prefab[engine].GetComponent<VehicleComponent>());
         setStats(set);
-        GameObject vehicle = build(set);
+        GameObject vehicle = buildVehicle(set);
         vehicle.transform.SetParent(transform,false);
         print("CreateVehicle Succeeded!");
     }
@@ -363,6 +371,74 @@ public class NewPlayerController : NetworkBehaviour
 
         return vehicle;
     }*/
+    public GameObject buildVehicle(Dictionary<string, VehicleComponent> set)
+    {
+        GameObject reference = new GameObject("Reference");
+        GameObject board = Instantiate<GameObject>(Resources.Load<GameObject>("Prefabs/TemplateComps/Board"), reference.transform);
+        VehicleComponent cannon = Instantiate<VehicleComponent>(set["cannon"], reference.transform);
+        GameObject spawn = new GameObject("SpawnBullet");
+        Vector3 position = cannon.transform.position;
+        position.z -= 3;
+        position.y += 1;
+        spawn.transform.SetParent(cannon.transform);
+        GetComponent<NetworkVehicle>().spawnBullet = spawn;
+        VehicleComponent armor = Instantiate<VehicleComponent>(set["armor"], reference.transform);
+        VehicleComponent engine = Instantiate<VehicleComponent>(set["engine"], reference.transform);
+        GameObject center = new GameObject("Center");
+        center.transform.position = transform.position + board.transform.position + cannon.transform.position + armor.transform.position + engine.transform.position;
+        for (int i = 0; i < 4; i++)
+        {
+            VehicleComponent wheel = buildWheel(set["wheel"], i, reference.transform);
+            wheel.name = wheel.name.Substring(0, wheel.name.Length - 7)+i;
+            wheels.Add(wheel.gameObject);
+            wheelColliders.Add(wheel.GetComponent<WheelCollider>());
+            if (i<=1) steerWheels.Add(wheel.GetComponent<WheelCollider>());
+            center.transform.position += wheel.transform.position;
+        }
+        center.transform.position /= 9;
+        center.transform.SetParent(transform);
+        SetupCollider();
+        CarMovements car = GetComponent<CarMovements>();
+        car.wheels = wheelColliders;
+        car.meshes = wheels;
+        car.steeringWheels = steerWheels;
+        car.CM = center.transform;
+        return reference;
+
+    }
+
+    private void SetupCollider()
+    {
+        BoxCollider collider = GetComponent<BoxCollider>();
+        /*float sizeX = board.transform.localScale.x;
+        float sizeY = board.transform.localScale.y + engine.transform.localScale.y + cannon.transform.localScale.y;
+        float sizeZ = board.transform.localScale.z;*/
+        collider.size = new Vector3(7, 4, 6);
+        collider.center = new Vector3(0, 2.5f, 0);
+    }
+
+    private VehicleComponent buildWheel(VehicleComponent wheel, int i, Transform parent)
+    {
+
+        VehicleComponent buildwheel = Instantiate<VehicleComponent>(wheel, parent);
+        if (i == 1)
+        {//top right;
+            buildwheel.transform.position = new Vector3(2.45105f, -0.004784107f, 1.956946f);
+            buildwheel.transform.Rotate(0, 0, -180);
+        }
+        else if (i == 2)
+        {//bottom left
+            buildwheel.transform.position = new Vector3(-2.463034f, 0.0188747f, -2.8425256f);
+        }
+        else if (i == 3)
+        { //bottom right
+            buildwheel.transform.position = new Vector3(2.45105f, -0.004784107f, -2.863177f);
+            buildwheel.transform.Rotate(0, 0, -180);
+        }
+
+        return buildwheel;
+    }
+
 
     private GameObject build(Dictionary<string, VehicleComponent> set) //assemblaggio effettivo
     {
@@ -384,8 +460,8 @@ public class NewPlayerController : NetworkBehaviour
         float sizeX = board.transform.localScale.x;
         float sizeY = board.transform.localScale.y + engine.transform.localScale.y + cannon.transform.localScale.y;
         float sizeZ = board.transform.localScale.z;
-        collider.size = new Vector3(3*sizeX/2, 3*sizeY/2, 3*sizeZ/2);
-        collider.center = new Vector3(0, sizeY-1, 0);
+        collider.size = new Vector3(7,7,7);
+        collider.center = new Vector3(0, sizeY-sizeY/2, 0);
         setupRigidBody();
         return board;
     }
@@ -398,6 +474,10 @@ public class NewPlayerController : NetworkBehaviour
 
     private void setStats(Dictionary<string,VehicleComponent> set)
     {
+        foreach(VehicleComponent comp in set.Values)
+        {
+            print("COMP: " + comp);
+        }
         speed = set["engine"].values[0];
         acceleration = set["engine"].values[1];
         attack = set["cannon"].values[0];

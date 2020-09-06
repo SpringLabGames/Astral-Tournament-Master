@@ -24,6 +24,7 @@ public class CarMovements :  NetworkBehaviour
     {
         if (isLocalPlayer)
         {
+            //CM = transform;
             im = GetComponent<InputManager>();
             rb = GetComponent<Rigidbody>();
             globalRef = Global.Instance;

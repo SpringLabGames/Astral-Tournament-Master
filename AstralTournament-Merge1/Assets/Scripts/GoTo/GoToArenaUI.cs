@@ -31,10 +31,10 @@ public class GoToArenaUI : MonoBehaviour
         //global.addVehicle(astroMachine);
         //Vehicle vehicle = global.GetVehicle();
         //print(vehicle);
-        vehicle.blocked = true;
+        //vehicle.blocked = true;
         //vehicle.transform.SetParent(null);
         //vehicle.gameObject.AddComponent<NetworkIdentity>().localPlayerAuthority = true;
-        vehicle.gameObject.AddComponent<NetworkTransform>().transformSyncMode=NetworkTransform.TransformSyncMode.SyncTransform;
+        //vehicle.gameObject.AddComponent<NetworkTransform>().transformSyncMode=NetworkTransform.TransformSyncMode.SyncTransform;
         //GameObject game = PrefabUtility.SaveAsPrefabAssetAndConnect(vehicle.gameObject, "Assets/Resources/Prefabs/Astromachine.prefab", InteractionMode.UserAction);
         //global.addVehicle(vehicle);
         //global.GetVehicle().transform.SetParent(null);

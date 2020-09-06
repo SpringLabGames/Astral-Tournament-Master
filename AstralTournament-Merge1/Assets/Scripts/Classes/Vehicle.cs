@@ -81,6 +81,7 @@ public class Vehicle : MonoBehaviour
             //global.addVehicle(GetComponent<Vehicle>());
             NetworkVehicle.changed = Select.changed; //se c'è stato un cambiamento, allora bisogna anche aggiornare le variabili delle componenti
             Select.changed = false;
+            setComponentNet(set);
             /*if (net != null) Destroy(net); 
             net = createNetVehicle(); //risetta le variabili per le componenti utilizzate
             //net.GetComponent<NetworkVehicle>().create();
@@ -102,13 +103,16 @@ public class Vehicle : MonoBehaviour
     {
         bool end = false;
         int index = -1;
+        print("Chosen COMP: " +comp.name);
         LobbyManager netManager = GameObject.Find("LobbyManager").GetComponent<LobbyManager>();
         for (int i = 0; i < netManager.componentPrefabs.Count && !end; i++)
         {
             //print(comp + " -- " + netManager.spawnPrefabs[i]);
             if (comp.name.Equals(netManager.componentPrefabs[i].name))
             {
+                print("SPAWN COMP: " + netManager.componentPrefabs[i].name);
                 index = i;
+                print("INDEX: " + index);
                 end = true;
             }
         }
@@ -120,7 +124,7 @@ public class Vehicle : MonoBehaviour
     public GameObject buildVehicle(Dictionary<string, VehicleComponent> set)
     {
         GameObject reference = new GameObject("Reference");
-        GameObject board = Instantiate<GameObject>(Resources.Load<GameObject>("Prefabs/Components/Board"), reference.transform);
+        GameObject board = Instantiate<GameObject>(Resources.Load<GameObject>("Prefabs/TemplateComps/Board"), reference.transform);
         VehicleComponent cannon = Instantiate<VehicleComponent>(set["cannon"], reference.transform);
         VehicleComponent armor = Instantiate<VehicleComponent>(set["armor"], reference.transform);
         VehicleComponent engine = Instantiate<VehicleComponent>(set["engine"],reference.transform);
