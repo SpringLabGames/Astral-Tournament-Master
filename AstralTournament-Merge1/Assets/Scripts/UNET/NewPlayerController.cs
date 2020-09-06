@@ -26,6 +26,7 @@ public class NewPlayerController : NetworkBehaviour
 
     private List<WheelCollider> wheelColliders;
     private List<WheelCollider> steerWheels;
+    public GameObject wheelHolder;
     private List<GameObject> wheels;
 
     private bool mouseButtonPressed;
@@ -380,24 +381,41 @@ public class NewPlayerController : NetworkBehaviour
         Vector3 position = cannon.transform.position;
         position.z -= 3;
         position.y += 1;
+
         spawn.transform.SetParent(cannon.transform);
+        spawn.transform.position = new Vector3(cannon.transform.position.x + .03f, cannon.transform.position.y - .06f, cannon.transform.position.z + 4.25f);
         GetComponent<NetworkVehicle>().spawnBullet = spawn;
+
         VehicleComponent armor = Instantiate<VehicleComponent>(set["armor"], reference.transform);
         VehicleComponent engine = Instantiate<VehicleComponent>(set["engine"], reference.transform);
         GameObject center = new GameObject("Center");
         center.transform.position = transform.position + board.transform.position + cannon.transform.position + armor.transform.position + engine.transform.position;
         for (int i = 0; i < 4; i++)
         {
-            VehicleComponent wheel = buildWheel(set["wheel"], i, reference.transform);
+            //GameObject holder = new GameObject("Holder" + i);
+            //holder.transform.SetParent(reference.transform);
+            GameObject holder = Instantiate(wheelHolder, reference.transform);
+            holder.name = "W_Holder" + i;
+
+            //VehicleComponent wheel = buildWheel(set["wheel"], i, reference.transform);
+            VehicleComponent wheel = buildWheel(set["wheel"], i, holder.transform);
+
             wheel.name = wheel.name.Substring(0, wheel.name.Length - 7)+i;
             wheels.Add(wheel.gameObject);
-            wheelColliders.Add(wheel.GetComponent<WheelCollider>());
-            if (i<=1) steerWheels.Add(wheel.GetComponent<WheelCollider>());
+            //wheelColliders.Add(wheel.GetComponent<WheelCollider>());
+            wheelColliders.Add(holder.GetComponent<WheelCollider>());
+            //if (i<=1) steerWheels.Add(wheel.GetComponent<WheelCollider>());
+            if (i <= 1)
+            {
+                steerWheels.Add(holder.GetComponent<WheelCollider>());
+            }
             center.transform.position += wheel.transform.position;
 
-            WheelCollider collider = wheel.GetComponent<WheelCollider>();
-            collider.radius = 0.63f;
-            collider.center = new Vector3(0, 0, 0);
+            //WheelCollider collider = wheel.GetComponent<WheelCollider>();
+            //WheelCollider collider = holder.GetComponent<WheelCollider>();
+
+            //collider.radius = 0.63f;
+            //collider.center = new Vector3(0, 0, 0);
         }
         center.transform.position /= 9;
         center.transform.SetParent(transform);
@@ -417,8 +435,8 @@ public class NewPlayerController : NetworkBehaviour
         /*float sizeX = board.transform.localScale.x;
         float sizeY = board.transform.localScale.y + engine.transform.localScale.y + cannon.transform.localScale.y;
         float sizeZ = board.transform.localScale.z;*/
-        collider.size = new Vector3(6.2940347f,2.506618f,6.808867f);
-        collider.center = new Vector3(-0.05883098f,0.4f,-0.4374144f);
+        collider.size = new Vector3(5.786455f,2.506618f,5.785578f);
+        collider.center = new Vector3(-0.0951688f,0.4000005f,-0.6181545f);
     }
 
     private VehicleComponent buildWheel(VehicleComponent wheel, int i, Transform parent)
@@ -428,22 +446,33 @@ public class NewPlayerController : NetworkBehaviour
         if (i==0)
         {
             //top left;
-            buildwheel.transform.position = new Vector3(-2.463034f, 0.0188747f, 1.956946f);
+            //buildwheel.transform.position = new Vector3(-2.463034f, 0.0188747f, 1.956946f);
+            parent.position = new Vector3(-2.463034f, 0.0188747f, 1.956946f);
+            //GetComponent<AntiRollBar>().WheelL = parent.GetComponent<WheelCollider>();
         }
         else if (i == 1)
         {//top right;
-            buildwheel.transform.position = new Vector3(2.463034f, 0.0188747f, 1.956946f);
-            buildwheel.transform.Rotate(0, 0, -180);
+            //buildwheel.transform.position = new Vector3(2.463034f, 0.0188747f, 1.956946f);
+            //buildwheel.transform.Rotate(0, 0, -180);
+            parent.position = new Vector3(2.463034f, 0.0188747f, 1.956946f);
+            //La ruota con i = 1 viene ruotata in CarMovement in quanto ruota motrice.
+            //parent.Rotate(0, 0, -180);
+            //GetComponent<AntiRollBar>().WheelR = parent.GetComponent<WheelCollider>();
         }
         else if (i == 2 )
         {//bottom left
-            buildwheel.transform.position = new Vector3(-2.463034f, 0.0188747f, -2.8425256f);
+            //buildwheel.transform.position = new Vector3(-2.463034f, 0.0188747f, -2.8425256f);
+            parent.position = new Vector3(-2.463034f, 0.0188747f, -2.8425256f);
         }
         else if (i == 3)
         { //bottom right
-            buildwheel.transform.position = new Vector3(2.463034f, 0.0188747f, -2.8425256f);
+            //buildwheel.transform.position = new Vector3(2.463034f, 0.0188747f, -2.8425256f);
+            parent.position = new Vector3(2.463034f, 0.0188747f, -2.8425256f);
             buildwheel.transform.Rotate(0, 0, -180);
+            //parent.Rotate(0, 0, -180);
         }
+        //VehicleComponent buildwheel = Instantiate<VehicleComponent>(wheel, parent);
+        buildwheel.transform.localPosition = Vector3.zero;
 
         return buildwheel;
     }

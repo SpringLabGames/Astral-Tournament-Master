@@ -30,7 +30,7 @@ public class AimingSystem : NetworkBehaviour
         if (isLocalPlayer)
         {
             string cannonName = getCannonName();
-            print(cannonName);
+            //print(cannonName);
             GameObject cannonObj = GameObject.Find("LocalVehicle/Reference/"+cannonName+"(Clone)/CannonCane");
             GameObject towerObj = GameObject.Find("LocalVehicle/Reference/"+cannonName+"(Clone)");
             

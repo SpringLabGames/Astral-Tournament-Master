@@ -18,6 +18,7 @@ GameObject:
   - component: {fileID: 8637290988853268850}
   - component: {fileID: 8637290988853268853}
   - component: {fileID: 114491878622900016}
+  - component: {fileID: 114720258275102560}
   m_Layer: 0
   m_Name: NetVehicle
   m_TagString: Untagged
@@ -116,6 +117,8 @@ MonoBehaviour:
   defense: 0
   maneuverability: 0
   defenseType: 0
+  wheelHolder: {fileID: 3394706655642545836, guid: 372966b8eae4515478d6569df7db8d58,
+    type: 3}
 --- !u!114 &8637290988853268849
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -219,3 +222,18 @@ MonoBehaviour:
   m_SnapThreshold: 5
   m_InterpolateRotation: 1
   m_InterpolateMovement: 1
+--- !u!114 &114720258275102560
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8637290988853268852}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2385927cc7956f54895c5fea26ed5605, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  WheelL: {fileID: 0}
+  WheelR: {fileID: 0}
+  AntiRoll: 5000
