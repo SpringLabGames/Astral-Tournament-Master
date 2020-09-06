@@ -76,7 +76,62 @@ ModelImporter:
     4300018: Seat
     4300020: Volante
     4300022: Testina
-  externalObjects: {}
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Cruscotto
+    second: {fileID: 2100000, guid: ccb02a96033dc214c89bef8bb764e055, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Glass
+    second: {fileID: 2100000, guid: fbda5cff628fe8a468fb360386b0e5ae, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Material
+    second: {fileID: 2100000, guid: 4f83b01d4ebee1f42a378433339d0ae7, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Material.002
+    second: {fileID: 2100000, guid: 9d45650db3d313c419920da8a98e8d75, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Material.004
+    second: {fileID: 2100000, guid: 878a960bcce171747905ab46293cd1f5, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Material.008
+    second: {fileID: 2100000, guid: e5f529f21fc4fab419d6802fe8d58fb6, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: MetalMaterial
+    second: {fileID: 2100000, guid: f5340b877ea7f504f911dcdfa0f98e55, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: No Name
+    second: {fileID: 2100000, guid: 308b08ce127084f4eb2a088ab2857cbb, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Paintjob
+    second: {fileID: 2100000, guid: 0ff97d0576a50b142a6294e02d231e7e, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: SeatMaterial
+    second: {fileID: 2100000, guid: c4e4e3dd8403e8b448184c896f78fe02, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: VolanteMat
+    second: {fileID: 2100000, guid: 6b591a69a35d0bd49a5f65d83c3d0108, type: 2}
   materials:
     importMaterials: 1
     materialName: 0
