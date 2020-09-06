@@ -18,7 +18,7 @@ public class MousePointer : MonoBehaviour
         RectTransform canvas = GetComponent<RectTransform>();
         //print("SCREEN: " + Screen.width + " - " + Screen.height);
         center = new Vector3(Screen.width/2,Screen.height/2,0);
-        pointer = GameObject.Find("Canvas/crosshair").GetComponent<RawImage>();
+        pointer = GameObject.Find("PlayUI/crosshair").GetComponent<RawImage>();
         spawnBullet = GameObject.Find("Player/SpawnBullet");
         camera = GameObject.Find("Player/Main Camera").GetComponent<Camera>();
         //Vector3 position = camera.transform.position;

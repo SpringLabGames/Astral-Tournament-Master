@@ -1,11 +1,13 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
 public class PlayUI : MonoBehaviour
 {
     private Text health;
+    public TMP_Text gameStatus;
     private List<RawImage> powerUps;
     private RawImage status;
     public NetworkVehicle player;
@@ -14,17 +16,18 @@ public class PlayUI : MonoBehaviour
     {
         //NetworkVehicle net = GameObject.Find("LocalVehicle").GetComponent<NetworkVehicle>();
         //global = Global.Instance;
+        gameStatus = GameObject.Find("PlayUI/GameStatus").GetComponent<TMP_Text>();
         powerUps = new List<RawImage>();
-        health = GameObject.Find("Canvas/HP").GetComponent<Text>();
+        health = GameObject.Find("PlayUI/HP").GetComponent<Text>();
         //health.text = player.health + "/" + player.maxHealth;
         for (int i = 0; i < 4; i++)
         {
-            powerUps.Add(GameObject.Find("Canvas/Power Ups/Power Up " + i).GetComponent<RawImage>());
+            powerUps.Add(GameObject.Find("PlayUI/Power Ups/Power Up " + i).GetComponent<RawImage>());
             Color color = powerUps[i].color;
             //color.a = 0;
             powerUps[i].color = color;
         }
-        status = GameObject.Find("Canvas/Status").GetComponent<RawImage>();
+        status = GameObject.Find("PlayUI/Status").GetComponent<RawImage>();
     }
 
     // Update is called once per frame

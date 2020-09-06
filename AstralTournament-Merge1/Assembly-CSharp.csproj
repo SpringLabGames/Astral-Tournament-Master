@@ -89,7 +89,6 @@
     <Compile Include="Assets\SampleScenes\Scripts\PlaceTargetWithMouse.cs" />
     <Compile Include="Assets\SampleScenes\Scripts\SlowMoButton.cs" />
     <Compile Include="Assets\Scripts\AI\FiniteStateMachineBase.cs" />
-    <Compile Include="Assets\Scripts\Assemble.cs" />
     <Compile Include="Assets\Scripts\BackgroundMusic.cs" />
     <Compile Include="Assets\Scripts\Bullet.cs" />
     <Compile Include="Assets\Scripts\Classes\Arena.cs" />
@@ -107,14 +106,16 @@
     <Compile Include="Assets\Scripts\Luigi\CarMovements.cs" />
     <Compile Include="Assets\Scripts\Luigi\InputManager.cs" />
     <Compile Include="Assets\Scripts\Luigi\PowerUpSystem.cs" />
+    <Compile Include="Assets\Scripts\Match\ArenaMatch.cs" />
+    <Compile Include="Assets\Scripts\Match\GiantMatch.cs" />
+    <Compile Include="Assets\Scripts\Match\Match.cs" />
+    <Compile Include="Assets\Scripts\Match\SiegeMatch.cs" />
     <Compile Include="Assets\Scripts\MenuUI\PlayClick.cs" />
     <Compile Include="Assets\Scripts\MenuUI\StopClick.cs" />
-    <Compile Include="Assets\Scripts\Movement.cs" />
     <Compile Include="Assets\Scripts\Music.cs" />
     <Compile Include="Assets\Scripts\Networking\CreateMatch.cs" />
     <Compile Include="Assets\Scripts\Networking\JoinMatch.cs" />
     <Compile Include="Assets\Scripts\Networking\MatchMaker.cs" />
-    <Compile Include="Assets\Scripts\PassComponents.cs" />
     <Compile Include="Assets\Scripts\Player\CameraMovement.cs" />
     <Compile Include="Assets\Scripts\Player\MousePointer.cs" />
     <Compile Include="Assets\Scripts\Player\PlayerStatus.cs" />
