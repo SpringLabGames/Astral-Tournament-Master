@@ -31,7 +31,7 @@ public class GameUI : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        player = global.player;
+        player = global.player.GetComponent<NetworkVehicle>();
         if(player!=null)
         {
             health.text = player.health + "/" + player.maxHealth;

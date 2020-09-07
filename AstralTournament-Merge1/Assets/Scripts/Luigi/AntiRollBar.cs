@@ -46,12 +46,13 @@ public class AntiRollBar : MonoBehaviour
                 WheelR.transform.position);
     }
 
-    private void Update()
+    private void FixedUpdate()
     {
-        if(transform.localRotation.z < -60f || transform.localRotation.z > 60f || transform.localRotation.x < 60f || transform.localRotation.x > 60f)
+        if(transform.rotation.z < -60f || transform.rotation.z > 60f || transform.rotation.x < -60f || transform.rotation.x > 60f)
         {
-            transform.localRotation = Quaternion.identity;
+            Debug.Log("Boh");
+            transform.rotation = new Quaternion(0, 0, 0, 0);
         }
-    }*/
-
+    }
+*/
 }

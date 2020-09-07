@@ -30,6 +30,7 @@ public class CharacterSelected : MonoBehaviour
     private void onCLick()
     {
         global.character = character.name;
+        NetworkVehicle net = Resources.Load<GameObject>("Prefabs/NetVehicle").GetComponent<NetworkVehicle>();
     }
 
     // Update is called once per frame

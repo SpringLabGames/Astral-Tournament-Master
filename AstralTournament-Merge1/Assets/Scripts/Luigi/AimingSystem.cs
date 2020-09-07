@@ -15,13 +15,21 @@ public class AimingSystem : NetworkBehaviour
 
     //private float towerAngle;
     private float cannonAngle;
+    private Global global;
     //private Vector3 target;
 
-    private void Start()
+    void Start()
     {
-        crossHairGO = GameObject.Find("crosshair");
-        cannon = null;
-        tower = null;
+        if (isLocalPlayer)
+        {
+            crossHairGO = GameObject.Find("crosshair");
+            //cannon = gameObject.transform.GetChild(1).GetChild(1).GetChild(0);
+            //tower = gameObject.transform.GetChild(1).GetChild(1);
+            global = Global.Instance;
+            //cannon = global.player.transform.GetChild(1).GetChild(1).GetChild(0);
+            //tower = global.player.transform.GetChild(1).GetChild(1);
+            //Debug.Log(global.player.transform.childCount);
+        }
     }
 
     // Update is called once per frame
@@ -31,12 +39,29 @@ public class AimingSystem : NetworkBehaviour
         {
             string cannonName = getCannonName();
             //print(cannonName);
-            GameObject cannonObj = GameObject.Find("LocalVehicle/Reference/"+cannonName+"(Clone)/CannonCane");
-            GameObject towerObj = GameObject.Find("LocalVehicle/Reference/"+cannonName+"(Clone)");
-            
-            if (cannonObj == null || towerObj == null) return;
+            /*GameObject cannonObj;
+            GameObject towerObj;
+            if (isServer)
+            {
+                cannonObj = GameObject.Find("LocalVehicle/Reference/" + cannonName + "(Clone)/CannonCane");
+                towerObj = GameObject.Find("LocalVehicle/Reference/" + cannonName + "(Clone)");
+            }
+            else
+            {
+                //cannonObj = GameObject.Find("NetVehicle(Clone)/Reference/" + cannonName + "(Clone)/CannonCane");
+                cannonObj = transform.GetChild(1).GetChild(1).GetChild(0).gameObject;
+                //towerObj = GameObject.Find("NetVehicle(Clone)/Reference/" + cannonName + "(Clone)");
+                towerObj = transform.GetChild(1).GetChild(1).gameObject;
+            }
+            Debug.Log(transform.GetChild(0) + "\n" + transform.GetChild(1));
+
+            //cannonObj = transform.GetChild(1).GetChild(1).GetChild(0).gameObject;
+            //towerObj = transform.GetChild(1).GetChild(1).gameObject;
+
+            //if (cannonObj == null || towerObj == null) return;
             cannon = cannonObj.transform;
-            tower = towerObj.transform;
+            tower = towerObj.transform;*/
+            //Global.Instance.
             rotateTower();
             rotateCannon();
             moveCrosshair();

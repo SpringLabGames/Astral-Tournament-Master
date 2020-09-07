@@ -11,6 +11,7 @@ TagManager:
   - Cannon
   - Engine
   - Wheel
+  - Fruit
   layers:
   - Default
   - TransparentFX

@@ -29,6 +29,7 @@ public class CameraManager : MonoBehaviour
             //focus = GameObject.Find("NetVehicle(Clone)");
             try
             {
+                //focus = GameObject.Find("LocalVehicle");
                 focus = Global.Instance.player.gameObject;
             }
             catch

@@ -27,6 +27,8 @@ public class AstralBomb : ThrowablePowerUp
     private void OnTriggerEnter(Collider collider)
     {
         print("COLLIDED");
+        PowerUp up = collider.GetComponent<PowerUp>();
+        if (up != null) return;
         NetworkVehicle net = collider.GetComponent<NetworkVehicle>();
         if (net != null)
         {

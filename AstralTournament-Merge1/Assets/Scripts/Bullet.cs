@@ -8,6 +8,8 @@ public class Bullet : MonoBehaviour
     public float attack;
     public Type attackType;
 
+    public GameObject hitPrefab;
+
     private void OnTriggerEnter(Collider collider)
     {
         NetworkVehicle net = collider.GetComponent<NetworkVehicle>();
@@ -18,6 +20,17 @@ public class Bullet : MonoBehaviour
             int damage = Mathf.CeilToInt(player.defense - attack*typeManager.EffectValue(attackType,player.defenseType));
             if (damage >= 0) net.health -= damage;
         }
+        Bullet bullet = collider.GetComponent<Bullet>();
+        if (bullet != null) return;
+        StartCoroutine("HitBullet");
+    }
+
+    private IEnumerator HitBullet()
+    {
+        GameObject hit = Instantiate<GameObject>(hitPrefab);
+        hit.transform.position = transform.position;
+        yield return new WaitForSeconds(1);
+        Destroy(hit);
         Destroy(gameObject);
     }
 

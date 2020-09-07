@@ -76,6 +76,8 @@
     <Compile Include="Assets\Packages\UnityFBXExporter\FBXUnityMaterialGetter.cs" />
     <Compile Include="Assets\Packages\UnityFBXExporter\FBXUnityMeshGetter.cs" />
     <Compile Include="Assets\PreviousScene.cs" />
+    <Compile Include="Assets\Resources\Prefabs\Boss\Boss_walk.cs" />
+    <Compile Include="Assets\Resources\Prefabs\Boss\Fruit.cs" />
     <Compile Include="Assets\SampleScenes\Menu\Scripts\MenuSceneLoader.cs" />
     <Compile Include="Assets\SampleScenes\Menu\Scripts\PauseMenu.cs" />
     <Compile Include="Assets\SampleScenes\Menu\Scripts\SceneAndURLLoader.cs" />
@@ -113,8 +115,12 @@
     <Compile Include="Assets\Scripts\Networking\CreateMatch.cs" />
     <Compile Include="Assets\Scripts\Networking\JoinMatch.cs" />
     <Compile Include="Assets\Scripts\Networking\MatchMaker.cs" />
+    <Compile Include="Assets\Scripts\Networking\NetworkLobbyHook.cs" />
     <Compile Include="Assets\Scripts\Player\CameraMovement.cs" />
+    <Compile Include="Assets\Scripts\Player\Health.cs" />
+    <Compile Include="Assets\Scripts\Player\HealthDisplay.cs" />
     <Compile Include="Assets\Scripts\Player\MousePointer.cs" />
+    <Compile Include="Assets\Scripts\Player\NotificationSystem.cs" />
     <Compile Include="Assets\Scripts\Player\PlayerStatus.cs" />
     <Compile Include="Assets\Scripts\Player\Type.cs" />
     <Compile Include="Assets\Scripts\Player\VehicleMovement.cs" />

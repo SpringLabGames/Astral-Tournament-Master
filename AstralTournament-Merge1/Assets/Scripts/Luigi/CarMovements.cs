@@ -29,7 +29,7 @@ public class CarMovements :  NetworkBehaviour
             im = GetComponent<InputManager>();
             rb = GetComponent<Rigidbody>();
             globalRef = Global.Instance;
-            globalRef.player = GetComponent<NetworkVehicle>();
+            globalRef.player = gameObject;
         }
         /*if(CM)
         {
@@ -62,8 +62,8 @@ public class CarMovements :  NetworkBehaviour
                 wheel.steerAngle = maxTurn * im.steer;
                 //float angle = 0;
                 //if (wheel.name[wheel.name.Length - 1] == '1') angle = 180;
-                wheel.transform.localEulerAngles = new Vector3(0f, im.steer * maxTurn, (Int32.Parse(wheel.name[wheel.name.Length - 1].ToString()) == 0? 0 : -180)); //il figlio del wheelcollider è il mesh della ruota che deve ruotare
-                //La ruota con i = 3 viene ruotata in NewPlayerCotroller.
+                wheel.transform.localEulerAngles = new Vector3(0f, im.steer * maxTurn, (Int32.Parse(wheel.name[wheel.name.Length - 1].ToString()) == 0 ? 0 : -180)); //il figlio del wheelcollider è il mesh della ruota che deve ruotare
+                                                                                                                                                                        //La ruota con i = 3 viene ruotata in NewPlayerCotroller.
             }
 
             foreach (GameObject mesh in meshes)
@@ -71,6 +71,12 @@ public class CarMovements :  NetworkBehaviour
                 //int a = 1;
                 //if (mesh.name[mesh.name.Length - 1] == '2') a = -1;
                 mesh.transform.Rotate(0f, rb.velocity.magnitude * (transform.InverseTransformDirection(rb.velocity).z >= 0 ? 1 : -1) / (2 * Mathf.PI * .2f), 0f);
+            }
+
+            //Recover from flipping car
+            if (rb.transform.rotation.z < -.7f || rb.transform.rotation.z > .7f || rb.transform.rotation.x < -.7f || rb.transform.rotation.x > .7f)
+            {
+                rb.transform.rotation = new Quaternion(0, 0, 0, 0);
             }
         }
     }

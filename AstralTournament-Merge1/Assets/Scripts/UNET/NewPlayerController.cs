@@ -14,6 +14,7 @@ public class NewPlayerController : NetworkBehaviour
     [SyncVar] public int armor;
     [SyncVar] public int engine;
     [SyncVar] public int wheel;
+    [SyncVar] public Type type;
 
     //public GameObject vehiclePrefab;
 
@@ -34,6 +35,8 @@ public class NewPlayerController : NetworkBehaviour
     private Vector3 velocity; //Variabili per movimento
     private float drag;
 
+    private HealthDisplay hd;
+
 
     // Start is called before the first frame update
     void Start()
@@ -41,23 +44,39 @@ public class NewPlayerController : NetworkBehaviour
         wheelColliders = new List<WheelCollider>();
         steerWheels = new List<WheelCollider>();
         wheels = new List<GameObject>();
-        global = Global.Instance;
-        global.player = GetComponent<NetworkVehicle>();
-        initMovementThings();
+
+        //initMovementThings();
         netManager = GameObject.Find("LobbyManager").GetComponent<LobbyManager>();
         if (isLocalPlayer)
         {
+            
+            global = Global.Instance;
+            global.player = gameObject;
             name = "LocalVehicle";
             print("LOCAL CLIENT!");
             NetworkVehicle net = GetComponent<NetworkVehicle>();
-            CmdSetComponents(net.cannon, net.armor, net.engine, net.wheel/*,net.defenseType*/);
-            global.player = net;
+            CmdSetComponents(net.cannon, net.armor, net.engine, net.wheel,net.defenseType);
+            //global.player = net;
+            hd = GameObject.Find("UI_Health").GetComponent<HealthDisplay>();
+            hd.EventMatchWon += HandleMatchWon;
+
         }
         /*else if (!hasAuthority)
         {
             createVehicle();
         }*/
         mouseButtonPressed = false;
+    }
+
+    private void HandleMatchWon(NetworkInstanceId netID)
+    {
+        print("NET ID PLAYER LOCALE: " + GetComponent<NetworkIdentity>().netId);
+        print("NET ID EVENTO : " + netID);
+        print("NET NETBEH THIS: " + this.netId);
+        if (netID == GetComponent<NetworkIdentity>().netId)
+        {
+            Debug.Log("Player" + netID + " has won.");
+        }
     }
 
     // Update is called once per frame
@@ -122,14 +141,14 @@ public class NewPlayerController : NetworkBehaviour
 
 
     [Command]
-    public void CmdSetComponents(int cannon, int armor, int engine, int wheel/*, Type type*/)
+    public void CmdSetComponents(int cannon, int armor, int engine, int wheel, Type type)
     {
 
-        print("CMD SET COMPONENT");
+        //print("CMD SET COMPONENT");
         this.cannon = cannon;
         this.wheel = wheel;
         this.engine = engine;
-        //this.type = type;
+        this.type = type;
         if (isLocalPlayer || !isClient) createVehicle();
         if (isLocalPlayer)
         {
@@ -144,17 +163,17 @@ public class NewPlayerController : NetworkBehaviour
             camera.transform.position = position;
             camera.transform.SetParent(global.player.transform);
         }
-        RpcSetComponents(cannon, armor, engine, wheel/*, type*/);
+        RpcSetComponents(cannon, armor, engine, wheel, type);
     }
 
     [ClientRpc]
-    public void RpcSetComponents(int cannon, int armor, int engine, int wheel/*, Type type*/)
+    public void RpcSetComponents(int cannon, int armor, int engine, int wheel, Type type)
     {
-        print("RPC SET COMPONENT");
+        //print("RPC SET COMPONENT");
         this.cannon = cannon;
         this.wheel = wheel;
         this.engine = engine;
-        //this.type = type;
+        this.type = type;
         if (isLocalPlayer)
         {
             Vector3 rotation = transform.rotation.eulerAngles;
@@ -350,9 +369,9 @@ public class NewPlayerController : NetworkBehaviour
 
     private void createVehicle()
     {
-       
+        netManager = GameObject.Find("LobbyManager").GetComponent<LobbyManager>();
         List<GameObject> prefab = netManager.componentPrefabs;
-        print("WHEEL: " + prefab[wheel]);
+        //print("WHEEL: " + prefab[wheel]);
         Dictionary<string, VehicleComponent> set = new Dictionary<string, VehicleComponent>();
         set.Add("wheel", prefab[wheel].GetComponent<VehicleComponent>());
         set.Add("cannon", prefab[cannon].GetComponent<VehicleComponent>());
@@ -362,6 +381,7 @@ public class NewPlayerController : NetworkBehaviour
         GameObject vehicle = buildVehicle(set);
         vehicle.transform.SetParent(transform,false);
         print("CreateVehicle Succeeded!");
+        
     }
 
     /*public GameObject buildVehicle()
@@ -377,7 +397,15 @@ public class NewPlayerController : NetworkBehaviour
         GameObject reference = new GameObject("Reference");
         GameObject board = Instantiate<GameObject>(Resources.Load<GameObject>("Prefabs/TemplateComps/Board"), reference.transform);
         VehicleComponent cannon = Instantiate<VehicleComponent>(set["cannon"], reference.transform);
+
+        GetComponent<AimingSystem>().tower = cannon.transform;
+        GetComponent<AimingSystem>().cannon = cannon.transform.GetChild(0);
+        //NetworkTransformChild[] netChilds = GetComponents<NetworkTransformChild>();
+        //netChilds[0].target = cannon.transform;
+        //netChilds[1].target = cannon.transform.GetChild(0);
+
         GameObject spawn = new GameObject("SpawnBullet");
+        GameObject cane = getCannonCane();
         Vector3 position = cannon.transform.position;
         position.z -= 3;
         position.y += 1;
@@ -425,8 +453,18 @@ public class NewPlayerController : NetworkBehaviour
         car.meshes = wheels;
         car.steeringWheels = steerWheels;
         car.CM = center.transform;
+        
         return reference;
 
+    }
+
+    private GameObject getCannonCane()
+    {
+        NetworkVehicle net = GetComponent<NetworkVehicle>();
+        LobbyManager lobby = GameObject.Find("LobbyManager").GetComponent<LobbyManager>();
+        string cannonName = lobby.componentPrefabs[net.cannon].name + "(Clone)";
+        GameObject cane = GameObject.Find("Reference/" + cannonName + "/CannonCane");
+        return cane;
     }
 
     private void SetupCollider()
@@ -514,7 +552,7 @@ public class NewPlayerController : NetworkBehaviour
     {
         foreach(VehicleComponent comp in set.Values)
         {
-            print("COMP: " + comp);
+            //print("COMP: " + comp);
         }
         speed = set["engine"].values[0];
         acceleration = set["engine"].values[1];
@@ -644,14 +682,19 @@ public class NewPlayerController : NetworkBehaviour
     private Vector3 calcForce()
     {
         Vector3 axe = calcOrientationAxe();
+        NetworkVehicle net = GetComponent<NetworkVehicle>();
+        Debug.DrawLine(net.spawnBullet.transform.position, net.spawnBullet.transform.position + (axe), Color.green, 10);
         Vector3 center = new Vector3(Screen.width / 2, Screen.height / 2, 0);
         print("CENTER: " + center);
         Vector3 mousePos = Input.mousePosition;
         Vector3 mouseVector =mousePos - center;
         //print(mouseVector);
+        mouseVector.x /= (Screen.width / 2);
+        mouseVector.y /= (Screen.height / 2);
         print("MOUSE: " + mouseVector);
-        print(Input.mousePosition);
-        Vector3 throwVector =  (axe.normalized + mouseVector.normalized).normalized * mouseVector.magnitude * 10;
+        Debug.DrawLine(net.spawnBullet.transform.position, net.spawnBullet.transform.position + mouseVector, Color.blue, 10);
+        Vector3 throwVector =  Vector3.Lerp(axe, mouseVector, 0.1f) * Input.mousePosition.magnitude;
+        Debug.DrawLine(net.spawnBullet.transform.position, net.spawnBullet.transform.position + throwVector, Color.red, 10);
 
         //print("THROW: " + throwVector);
         //Vector3 throwVector = axe*Input.mousePosition.magnitude*10;

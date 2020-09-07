@@ -33,25 +33,33 @@ public class PlayUI : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        NetworkVehicle net = GameObject.Find("LocalVehicle").GetComponent<NetworkVehicle>();
-        if (net != null && net.isLocalPlayer)
+        GameObject game = GameObject.Find("LocalVehicle");
+        if(game != null)
         {
-            health.text=net.health+"/"+net.maxHealth;
-            int i = 0;
-            for (i = 0; i < net.powerUps.Count; i++)
+            NetworkVehicle net = game.GetComponent<NetworkVehicle>();
+            if (net != null && net.isLocalPlayer)
             {
-                powerUps[i].texture = net.powerUps[i].GetComponent<Renderer>().sharedMaterial.mainTexture;
+                health.text = net.health + "/" + net.maxHealth;
+                int i = 0;
+                for (i = 0; i < net.powerUps.Count; i++)
+                {
+                    powerUps[i].texture = net.powerUps[i].GetComponent<Renderer>().sharedMaterial.mainTexture;
+                }
+                for (; i < 4; i++)
+                {
+                    powerUps[i].texture = null;
+                }
+                status.texture = net.status;
+                Color color = status.color;
+                if (net.status != null)
+                {
+                    color.a = 1;
+                }
+                else color.a = 0;
+                status.color = color;
             }
-            for (; i < 4; i++)
-            {
-                powerUps[i].texture = null;
-            }
-            status.texture = net.status;
-            Color color = status.color;
-            if (net.status != null)
-                color.a = 1;
-            else color.a = 0;
-            status.color = color;
         }
+        
+        
     }
 }

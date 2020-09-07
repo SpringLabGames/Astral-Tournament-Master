@@ -3,7 +3,7 @@
 public class Character : MonoBehaviour
 {
     public string charactName;
-    //public Type type;
+    public Type type;
     public Color color;
 
     private void Start()

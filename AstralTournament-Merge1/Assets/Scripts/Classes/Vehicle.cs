@@ -103,16 +103,16 @@ public class Vehicle : MonoBehaviour
     {
         bool end = false;
         int index = -1;
-        print("Chosen COMP: " +comp.name);
+        //print("Chosen COMP: " +comp.name);
         LobbyManager netManager = GameObject.Find("LobbyManager").GetComponent<LobbyManager>();
         for (int i = 0; i < netManager.componentPrefabs.Count && !end; i++)
         {
             //print(comp + " -- " + netManager.spawnPrefabs[i]);
             if (comp.name.Equals(netManager.componentPrefabs[i].name))
             {
-                print("SPAWN COMP: " + netManager.componentPrefabs[i].name);
+                //print("SPAWN COMP: " + netManager.componentPrefabs[i].name);
                 index = i;
-                print("INDEX: " + index);
+                //print("INDEX: " + index);
                 end = true;
             }
         }

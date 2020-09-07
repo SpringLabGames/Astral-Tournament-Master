@@ -9,7 +9,7 @@ public class BluePotion : StatusPowerUp
 
     protected override void OnStatus()
     {
-        player = Global.Instance.player;
+        player = Global.Instance.player.GetComponent<NetworkVehicle>();
         int tmpHelth = player.health + healthIncrement;
         if (tmpHelth <= player.maxHealth) player.health = tmpHelth;
         else player.health = player.maxHealth;

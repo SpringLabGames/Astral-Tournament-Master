@@ -19,7 +19,8 @@ public class Global : MonoBehaviour
     //public int health;
     //public List<PowerUp> powerUps;
 
-    public NetworkVehicle player;
+    //public NetworkVehicle player;
+    public GameObject player;
 
     private static Global instance;
 

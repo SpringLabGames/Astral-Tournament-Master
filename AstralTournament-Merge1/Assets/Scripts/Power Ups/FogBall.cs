@@ -15,7 +15,9 @@ public class FogBall : ThrowablePowerUp
 
     private void OnTriggerEnter(Collider other)
     {
-        if(other is MeshCollider || other is TerrainCollider)
+        PowerUp up = other.GetComponent<PowerUp>();
+        if (up != null) return;
+        if (other is MeshCollider || other is TerrainCollider)
         {
             Vector3 scale = Vector3.zero;
             transform.localScale = scale;

@@ -6,6 +6,7 @@ using UnityEngine.Networking.Types;
 using UnityEngine.Networking.Match;
 using System.Collections;
 using System.Collections.Generic;
+using static NotificationSystem;
 
 namespace Prototype.NetworkLobby
 {
@@ -23,6 +24,7 @@ namespace Prototype.NetworkLobby
 
         public List<GameObject> powerUpPrefabs;
         public List<GameObject> componentPrefabs;
+        public List<GameObject> playersInGame;
 
         [Header("Unity UI Lobby")]
         [Tooltip("Time in second between all players ready & match start")]
@@ -408,6 +410,8 @@ namespace Prototype.NetworkLobby
             return true;
         }
 
+
+
         // --- Countdown management
 
         public override void OnLobbyServerPlayersReady()
@@ -493,5 +497,40 @@ namespace Prototype.NetworkLobby
             infoPanel.Display("Cient error : " + (errorCode == 6 ? "timeout" : errorCode.ToString()), "Close", null);
         }
         #endregion
+
+        #region MatchArenaMode
+
+        //quando inizia il gioco cambiamo scena. quindi Facciamo un invio a tutti di inizio gioco qui!
+        public override void OnServerSceneChanged(string sceneName)
+        {
+
+            if (sceneName.Equals("Arena"))
+            {
+                print("SIAMO IN ARENA. INVIA MESSAGGIO A TUTTI!");
+
+                StartCoroutine("startGame");
+            }
+            base.OnServerSceneChanged(sceneName);
+        }
+
+        public IEnumerator startGame()
+        {
+            yield return new WaitForSeconds(3); SendNotification("StartOfGame");
+        }
+
+        [ContextMenu("Send Notification")]
+        private void SendNotification(string msgContent)
+        {
+            Notification msg = new Notification();
+            msg.content = msgContent;
+            NetworkServer.SendToAll(numNotify, msg);
+            print("Sending notification...");
+        }
+        #endregion
+
+        public NetworkClient getClient()
+        {
+            return client;
+        }
     }
 }
