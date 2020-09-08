@@ -9,7 +9,7 @@ using UnityEngine.UI;
 
 public class HealthDisplay : MonoBehaviour
 {
-    private LobbyManager lobby;
+    private CustomLobby lobby;
     public static event Action OnMatchWon;
 
     [Header("References")]
@@ -63,7 +63,7 @@ public class HealthDisplay : MonoBehaviour
 
     private void Start()
     {
-        lobby = GameObject.Find("LobbyManager").GetComponent<LobbyManager>();
+        lobby = GameObject.Find("LobbyManager").GetComponent<CustomLobby>();
     }
     private void Update()
     {

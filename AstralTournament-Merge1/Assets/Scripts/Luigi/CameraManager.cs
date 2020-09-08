@@ -30,7 +30,7 @@ public class CameraManager : MonoBehaviour
             try
             {
                 //focus = GameObject.Find("LocalVehicle");
-                focus = Global.Instance.player.gameObject;
+                //focus = Global.Instance.player.gameObject;
             }
             catch
             {
@@ -52,10 +52,13 @@ public class CameraManager : MonoBehaviour
         }
         else
         {
-            transform.position = focus.transform.position + focus.transform.TransformDirection(new Vector3(l, h2, d2));
-            transform.rotation = focus.transform.rotation;
-            Camera.main.fieldOfView = 90f;
-            Camera.main.nearClipPlane = .1f;
+            if (focus != null)
+            {
+                transform.position = focus.transform.position + focus.transform.TransformDirection(new Vector3(l, h2, d2));
+                transform.rotation = focus.transform.rotation;
+                Camera.main.fieldOfView = 90f;
+                Camera.main.nearClipPlane = .1f;
+            }
         }
     }
 }

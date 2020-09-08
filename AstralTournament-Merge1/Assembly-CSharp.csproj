@@ -147,6 +147,7 @@
     <Compile Include="Assets\Scripts\UNET\CustomManager.cs" />
     <Compile Include="Assets\Scripts\UNET\NetworkVehicle.cs" />
     <Compile Include="Assets\Scripts\UNET\NewPlayerController.cs" />
+    <Compile Include="Assets\Scripts\UNET\NewPlayerController1.cs" />
     <Compile Include="Assets\Scripts\UNET\PlayerMessage.cs" />
     <Compile Include="Assets\Scripts\UNET\SetupLocalPlayer.cs" />
     <Compile Include="Assets\Scripts\UNET\SetupNetwork.cs" />

@@ -7,6 +7,7 @@ public class CustomLobby : NetworkLobbyManager
 {
     public List<GameObject> componentPrefabs;
     public List<GameObject> powerUpPrefabs;
+    public List<GameObject> playersInGame;
     // Start is called before the first frame update
     void Start()
     {

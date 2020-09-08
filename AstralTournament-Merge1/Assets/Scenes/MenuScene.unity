@@ -1912,7 +1912,8 @@ MonoBehaviour:
   m_PlayerSpawnMethod: 0
   m_OfflineScene: LobbyScene
   m_OnlineScene: 
-  m_SpawnPrefabs: []
+  m_SpawnPrefabs:
+  - {fileID: 3310703192250317704, guid: a3ce98fcbc70fa541819cac2c768e2de, type: 3}
   m_CustomConfig: 0
   m_MaxConnections: 4
   m_ConnectionConfig:
@@ -1981,6 +1982,7 @@ MonoBehaviour:
   lobbySlots: []
   componentPrefabs: []
   powerUpPrefabs: []
+  playersInGame: []
 --- !u!1 &1577109733
 GameObject:
   m_ObjectHideFlags: 0

@@ -17,7 +17,7 @@ public class Bullet : MonoBehaviour
         {
             TypeManager typeManager = new TypeManager();
             NewPlayerController player = net.GetComponent<NewPlayerController>();
-            int damage = Mathf.CeilToInt(player.defense - attack*typeManager.EffectValue(attackType,player.defenseType));
+            int damage = Mathf.CeilToInt(player.defense - attack);//*typeManager.EffectValue(attackType,player.defenseType));
             if (damage >= 0) net.health -= damage;
         }
         Bullet bullet = collider.GetComponent<Bullet>();

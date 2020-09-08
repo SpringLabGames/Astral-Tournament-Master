@@ -13,10 +13,13 @@ public class GreenPotion : StatusPowerUp
     private Thread thread;
     protected override void OnStatus()
     {
-        player = Global.Instance.player.GetComponent<NetworkVehicle>();
-        material = GetComponent<Renderer>().sharedMaterial;
-        StartCoroutine("StatusTime");
-        transform.localScale = Vector3.zero;
+        if (Global.Instance.player != null)
+        {
+            player = Global.Instance.player.GetComponent<NetworkVehicle>();
+            material = GetComponent<Renderer>().sharedMaterial;
+            StartCoroutine("StatusTime");
+            transform.localScale = Vector3.zero;
+        }
     }
 
     private IEnumerator StatusTime()

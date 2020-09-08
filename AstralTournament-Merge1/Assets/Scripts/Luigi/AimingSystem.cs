@@ -63,7 +63,7 @@ public class AimingSystem : NetworkBehaviour
             tower = towerObj.transform;*/
             //Global.Instance.
             rotateTower();
-            rotateCannon();
+            //rotateCannon();
             moveCrosshair();
         }
     }
@@ -86,27 +86,35 @@ public class AimingSystem : NetworkBehaviour
         if (ground.Raycast(cameraRay, out rayLength))
         {
             Vector3 pointToLook = cameraRay.GetPoint(rayLength);
-            tower.LookAt(new Vector3(pointToLook.x, tower.position.y, pointToLook.z));
+            if (tower != null)
+            {
+                tower.LookAt(new Vector3(pointToLook.x, tower.position.y, pointToLook.z));
+                //cannon.LookAt(pointToLook,Vector3.up);
+            }
         }
 
     }
 
     void rotateCannon()
     {
-        
-        cannonAngle += Input.GetAxis("Mouse Y") * cannonSpeed * -Time.deltaTime;
-        cannonAngle = Mathf.Clamp(cannonAngle, 80f, 100f);
-        cannon.localRotation = Quaternion.AngleAxis(cannonAngle, Vector3.right);
+        if (cannon != null)
+        {
+            cannonAngle += Input.GetAxis("Mouse Y") * cannonSpeed * -Time.deltaTime;
+            cannonAngle = Mathf.Clamp(cannonAngle, 70f, 110f);
+            cannon.localRotation = Quaternion.AngleAxis(cannonAngle, Vector3.right);
+        }
 
     }
 
     void moveCrosshair()
     {
-        
-        Vector3 chPos = Input.mousePosition;
-        chPos.x = Mathf.Clamp(chPos.x, 0, Screen.width);
-        chPos.y = Mathf.Clamp(chPos.y, 0, Screen.height);
-        crossHairGO.GetComponent<RawImage>().transform.position = chPos;
+        if (crossHairGO != null)
+        {
+            Vector3 chPos = Input.mousePosition;
+            chPos.x = Mathf.Clamp(chPos.x, 0, Screen.width);
+            chPos.y = Mathf.Clamp(chPos.y, 0, Screen.height);
+            crossHairGO.GetComponent<RawImage>().transform.position = chPos;
+        }
 
     }
 

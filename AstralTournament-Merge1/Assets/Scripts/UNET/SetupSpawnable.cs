@@ -12,6 +12,7 @@ public class SetupSpawnable : MonoBehaviour
     {
         netManager = GameObject.Find("LobbyManager").GetComponent<CustomLobby>();
         netManager.componentPrefabs= Resources.LoadAll<GameObject>("Prefabs/Components").ToList();
+        netManager.componentPrefabs.Insert(0, Resources.Load<GameObject>("Prefabs/Empty"));
         netManager.powerUpPrefabs = Resources.LoadAll<GameObject>("Prefabs/Power Ups").ToList();
     }
 
