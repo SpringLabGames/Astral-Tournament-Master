@@ -14,7 +14,7 @@ public class GiantMatch : MatchBase
     // Start is called before the first frame update
     void Start()
     {
-        LobbyManager lobby = GameObject.Find("LobbyManager").GetComponent<LobbyManager>();
+        CustomLobby lobby = GameObject.Find("LobbyManager").GetComponent<CustomLobby>();
         matchCount = 0;
         isMatchStarted = false;
         //numOfEnemies=numero giocatori avversari

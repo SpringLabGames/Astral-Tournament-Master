@@ -6,11 +6,11 @@ using UnityEngine;
 
 public class SetupSpawnable : MonoBehaviour
 {
-    private LobbyManager netManager;
+    private CustomLobby netManager;
     // Start is called before the first frame update
     void Start()
     {
-        netManager = GameObject.Find("LobbyManager").GetComponent<LobbyManager>();
+        netManager = GameObject.Find("LobbyManager").GetComponent<CustomLobby>();
         netManager.componentPrefabs= Resources.LoadAll<GameObject>("Prefabs/Components").ToList();
         netManager.powerUpPrefabs = Resources.LoadAll<GameObject>("Prefabs/Power Ups").ToList();
     }

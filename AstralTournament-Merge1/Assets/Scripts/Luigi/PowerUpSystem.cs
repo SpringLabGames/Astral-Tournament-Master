@@ -8,12 +8,12 @@ public class PowerUpSystem : NetworkBehaviour
 {
     public float attack;
 
-    private LobbyManager netManager;
+    private CustomLobby netManager;
     //private NetworkVehicle net;
     // Start is called before the first frame update
     void Start()
     {
-        netManager = GameObject.Find("LobbyManager").GetComponent<LobbyManager>();
+        netManager = GameObject.Find("LobbyManager").GetComponent<CustomLobby>();
         //net = GetComponent<NetworkVehicle>();
         //net.spawnBullet = new GameObject("SpawnBullet");
     }

@@ -6,7 +6,7 @@ using UnityEngine.Networking;
 
 public class BoxPowerUp : MonoBehaviour
 {
-    private LobbyManager netManager;
+    private CustomLobby netManager;
 
     // Start is called before the first frame update
     void Start()

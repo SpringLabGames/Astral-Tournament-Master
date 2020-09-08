@@ -62,6 +62,7 @@
   <ItemGroup>
     <Compile Include="Assets\Lobby\Scripts\DraggablePanel.cs" />
     <Compile Include="Assets\Lobby\Scripts\EventSystemChecker.cs" />
+    <Compile Include="Assets\Lobby\Scripts\Lobby\CustomLobby.cs" />
     <Compile Include="Assets\Lobby\Scripts\Lobby\LobbyCountdownPanel.cs" />
     <Compile Include="Assets\Lobby\Scripts\Lobby\LobbyHook.cs" />
     <Compile Include="Assets\Lobby\Scripts\Lobby\LobbyInfoPanel.cs" />

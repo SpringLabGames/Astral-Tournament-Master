@@ -7,7 +7,7 @@ using UnityEngine.Networking;
 
 public class NewPlayerController : NetworkBehaviour
 {
-    private LobbyManager netManager;
+    private CustomLobby netManager;
     private Global global;
 
     [SyncVar] public int cannon; //Componenti
@@ -46,7 +46,7 @@ public class NewPlayerController : NetworkBehaviour
         wheels = new List<GameObject>();
 
         //initMovementThings();
-        netManager = GameObject.Find("LobbyManager").GetComponent<LobbyManager>();
+        netManager = GameObject.Find("LobbyManager").GetComponent<CustomLobby>();
         if (isLocalPlayer)
         {
             
@@ -369,7 +369,7 @@ public class NewPlayerController : NetworkBehaviour
 
     private void createVehicle()
     {
-        netManager = GameObject.Find("LobbyManager").GetComponent<LobbyManager>();
+        netManager = GameObject.Find("LobbyManager").GetComponent<CustomLobby>();
         List<GameObject> prefab = netManager.componentPrefabs;
         //print("WHEEL: " + prefab[wheel]);
         Dictionary<string, VehicleComponent> set = new Dictionary<string, VehicleComponent>();
@@ -461,7 +461,7 @@ public class NewPlayerController : NetworkBehaviour
     private GameObject getCannonCane()
     {
         NetworkVehicle net = GetComponent<NetworkVehicle>();
-        LobbyManager lobby = GameObject.Find("LobbyManager").GetComponent<LobbyManager>();
+        CustomLobby lobby = GameObject.Find("LobbyManager").GetComponent<CustomLobby>();
         string cannonName = lobby.componentPrefabs[net.cannon].name + "(Clone)";
         GameObject cane = GameObject.Find("Reference/" + cannonName + "/CannonCane");
         return cane;

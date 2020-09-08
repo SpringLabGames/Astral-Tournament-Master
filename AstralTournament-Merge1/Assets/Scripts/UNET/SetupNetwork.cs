@@ -8,7 +8,7 @@ using UnityEngine.Networking;
 public class SetupNetwork : MonoBehaviour
 {
     private Global global;
-    private NetworkManager netManager;
+    private CustomLobby netManager;
     // Start is called before the first frame update
     void Start()
     {
@@ -17,7 +17,7 @@ public class SetupNetwork : MonoBehaviour
         //prefab.active = false;
         //print(prefab);
         //prefab = Resources.Load<GameObject>("Prefabs/Empty");
-        netManager = GameObject.Find("NetworkManager").GetComponent<NetworkManager>();
+        netManager = GameObject.Find("LobbyManager").GetComponent<CustomLobby>();
         netManager.gameObject.AddComponent<NetworkManagerHUD>();
         //netManager.playerPrefab = prefab;
         //ClientScene.RegisterPrefab(prefab);

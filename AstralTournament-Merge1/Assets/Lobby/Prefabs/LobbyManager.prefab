@@ -3248,6 +3248,7 @@ MonoBehaviour:
   global: {fileID: 0}
   powerUpPrefabs: []
   componentPrefabs: []
+  playersInGame: []
   prematchCountdown: 3
   topPanel: {fileID: 11424994}
   mainMenuPanel: {fileID: 22442386}

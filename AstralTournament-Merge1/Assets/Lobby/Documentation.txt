@@ -1,15 +1,15 @@
 This file explains a bit how the lobby is created & setup so you can personalize it.
 
 
-The main prefab is in "Prefabs/LobbyManager". This is a canvas with the LobbyManager script on it.
+The main prefab is in "Prefabs/CustomLobby". This is a canvas with the CustomLobby script on it.
 It have multiple child that setup the UI & different "screens" of the lobby (i.e. Server List, Player Lsit etc...)
 
-Everything above the "Unity UI Lobby" section in the Manager Inspector is from UnityEngine.Networking.NetworkLobbyManager, so see the doc
+Everything above the "Unity UI Lobby" section in the Manager Inspector is from UnityEngine.Networking.NetworkCustomLobby, so see the doc
 for it to see an explaination for all of them.
 
 Prematch countdown is the time between all players being ready & the game starting.
 
-The Lobbymanager script have reference to all the different screens for easy access.
+The CustomLobby script have reference to all the different screens for easy access.
 *if you totally replace one of those screens, set its reference there*
 
 Screens : 
@@ -44,7 +44,7 @@ Lobby panel
 
 The Lobby Panel is what is actually called the "lobby" : a list of player currently connected to the servers.
 
-For that the scropt LobbyPlayerList need UI rect where to place those players
+For that the scropt CustomLobbyList need UI rect where to place those players
 _Direct Play warning is only here as the prefab to display when you are in the lobby using directly IP (& not the matchmaker)_
 
 InfoPanel

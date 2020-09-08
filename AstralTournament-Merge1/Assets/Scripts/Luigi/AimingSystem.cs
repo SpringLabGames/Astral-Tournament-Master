@@ -70,7 +70,7 @@ public class AimingSystem : NetworkBehaviour
 
     private string getCannonName()
     {
-        LobbyManager lobby = GameObject.Find("LobbyManager").GetComponent<LobbyManager>();
+        CustomLobby lobby = GameObject.Find("LobbyManager").GetComponent<CustomLobby>();
         NetworkVehicle net = GetComponent<NetworkVehicle>();
         return lobby.componentPrefabs[net.cannon].name;
     }

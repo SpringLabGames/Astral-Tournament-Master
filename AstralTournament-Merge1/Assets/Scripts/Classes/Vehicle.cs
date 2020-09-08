@@ -104,7 +104,7 @@ public class Vehicle : MonoBehaviour
         bool end = false;
         int index = -1;
         //print("Chosen COMP: " +comp.name);
-        LobbyManager netManager = GameObject.Find("LobbyManager").GetComponent<LobbyManager>();
+        CustomLobby netManager = GameObject.Find("LobbyManager").GetComponent<CustomLobby>();
         for (int i = 0; i < netManager.componentPrefabs.Count && !end; i++)
         {
             //print(comp + " -- " + netManager.spawnPrefabs[i]);

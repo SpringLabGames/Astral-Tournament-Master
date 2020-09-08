@@ -17,7 +17,7 @@ public class ArenaMatch : MatchBase
     // Start is called before the first frame update
     void Start()
     {
-        LobbyManager lobby = GameObject.Find("LobbyManager").GetComponent<LobbyManager>();
+        CustomLobby lobby = GameObject.Find("LobbyManager").GetComponent<CustomLobby>();
         gameUI= GameObject.Find("PlayUI").GetComponent<PlayUI>();
         matchCount = 0;
         isMatchStarted = false;
