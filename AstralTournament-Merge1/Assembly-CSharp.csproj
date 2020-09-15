@@ -77,8 +77,11 @@
     <Compile Include="Assets\Packages\UnityFBXExporter\FBXUnityMaterialGetter.cs" />
     <Compile Include="Assets\Packages\UnityFBXExporter\FBXUnityMeshGetter.cs" />
     <Compile Include="Assets\PreviousScene.cs" />
+    <Compile Include="Assets\Resources\Prefabs\Boss\Boss.cs" />
+    <Compile Include="Assets\Resources\Prefabs\Boss\Boss_attack.cs" />
     <Compile Include="Assets\Resources\Prefabs\Boss\Boss_walk.cs" />
     <Compile Include="Assets\Resources\Prefabs\Boss\Fruit.cs" />
+    <Compile Include="Assets\Resources\Prefabs\Boss\Spear.cs" />
     <Compile Include="Assets\SampleScenes\Menu\Scripts\MenuSceneLoader.cs" />
     <Compile Include="Assets\SampleScenes\Menu\Scripts\PauseMenu.cs" />
     <Compile Include="Assets\SampleScenes\Menu\Scripts\SceneAndURLLoader.cs" />

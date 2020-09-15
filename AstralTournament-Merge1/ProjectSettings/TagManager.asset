@@ -12,6 +12,7 @@ TagManager:
   - Engine
   - Wheel
   - Fruit
+  - Boss
   layers:
   - Default
   - TransparentFX

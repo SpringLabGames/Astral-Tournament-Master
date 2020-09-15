@@ -123,7 +123,7 @@ ModelImporter:
     400116: Spine2
     2100000: MAW_MAT
     4300000: MAW
-    7400000: Heavy weapom swing
+    7400000: Heavy weapon swing
     9500000: //RootNode
     13700000: MAW
   externalObjects: {}
@@ -155,7 +155,7 @@ ModelImporter:
     extraUserProperties: []
     clipAnimations:
     - serializedVersion: 16
-      name: Heavy weapom swing
+      name: Heavy weapon swing
       takeName: mixamo.com
       firstFrame: 0
       lastFrame: 156
@@ -165,7 +165,7 @@ ModelImporter:
       cycleOffset: 0
       loop: 0
       hasAdditiveReferencePose: 0
-      loopTime: 0
+      loopTime: 1
       loopBlend: 0
       loopBlendOrientation: 0
       loopBlendPositionY: 0
@@ -177,7 +177,14 @@ ModelImporter:
       mirror: 0
       bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
       curves: []
-      events: []
+      events:
+      - time: 0.5147453
+        functionName: Attack
+        data: 
+        objectReferenceParameter: {instanceID: 0}
+        floatParameter: 0
+        intParameter: 0
+        messageOptions: 0
       transformMask: []
       maskType: 3
       maskSource: {instanceID: 0}

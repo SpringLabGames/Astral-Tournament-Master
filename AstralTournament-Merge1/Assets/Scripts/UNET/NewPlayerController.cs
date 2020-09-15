@@ -417,7 +417,7 @@ public class NewPlayerController : NetworkBehaviour
         GameObject board = Instantiate<GameObject>(Resources.Load<GameObject>("Prefabs/TemplateComps/Board"), reference.transform);
         VehicleComponent cannon = Instantiate<VehicleComponent>(set["cannon"], reference.transform);
 
-        //GetComponent<AimingSystem>().tower = cannon.transform;
+        GetComponent<AimingSystem>().tower = cannon.transform;
         //GetComponent<AimingSystem>().cannon = cannon.transform.GetChild(0);
 
         GameObject spawn = new GameObject("SpawnBullet");

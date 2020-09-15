@@ -88,6 +88,7 @@ GameObject:
   - component: {fileID: 7578426594804679369}
   - component: {fileID: 114239099260795646}
   - component: {fileID: 114167302143020800}
+  - component: {fileID: 8162642454192040962}
   m_Layer: 0
   m_Name: NetVehicle
   m_TagString: Player
@@ -254,6 +255,22 @@ MonoBehaviour:
   m_SnapThreshold: 5
   m_InterpolateRotation: 1
   m_InterpolateMovement: 1
+--- !u!114 &8162642454192040962
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2256456528952059407}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c5300fa6f30ad43469cc167cb740db4a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  tower: {fileID: 0}
+  cannon: {fileID: 0}
+  cannonSpeed: 100
+  crossHairGO: {fileID: 0}
 --- !u!1 &2621836820709882880
 GameObject:
   m_ObjectHideFlags: 0

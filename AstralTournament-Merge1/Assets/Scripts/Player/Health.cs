@@ -46,6 +46,12 @@ public class Health : NetworkBehaviour
     {
         setHealth(Mathf.Max(currentHealth - damagePerPress, 0));
     }
+
+    [Command]
+    public void CmdDealDamageWithAmount(int damageAmount)
+    {
+        setHealth(Mathf.Max(currentHealth - damageAmount, 0));
+    }
     #endregion
 
 
