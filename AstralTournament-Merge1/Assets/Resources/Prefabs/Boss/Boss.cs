@@ -2,9 +2,10 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
+using UnityEngine.Networking;
 
 [RequireComponent(typeof(NavMeshAgent))]
-public class Boss : MonoBehaviour
+public class Boss : NetworkBehaviour
 {
     public int health = 1000;
     public bool attacked;
@@ -17,7 +18,7 @@ public class Boss : MonoBehaviour
 
     public LayerMask layerMask;
 
-    private Transform target;
+    private int target_net_id;
 
     private bool m_Started;
 
@@ -28,7 +29,8 @@ public class Boss : MonoBehaviour
         m_Started = true;
     }
 
-    public void Spear_Attack()
+    [ClientRpc]
+    public void Rpc_Spear_Attack()
     {
         Vector3 scaleBox = new Vector3(2f, .3f, .2f);
 
@@ -43,7 +45,8 @@ public class Boss : MonoBehaviour
         }
     }
 
-    public void Kick_Attack()
+    [ClientRpc]
+    public void Rpc_Kick_Attack()
     {
         Vector3 scaleBox = new Vector3(.5f, .2f, .1f);
 
@@ -74,16 +77,18 @@ public class Boss : MonoBehaviour
         }
     }
 
-    public void takeDamage(int amount)
+    [ClientRpc]
+    public void Rpc_takeDamage(int amount)
     {
         health -= amount;
         if(health <= 0)
         {
-            die();
+            Rpc_die();
         }
     }
 
-    private void die()
+    [ClientRpc]
+    private void Rpc_die()
     {
         Destroy(gameObject);
         Debug.Log("Boss died");
@@ -94,9 +99,25 @@ public class Boss : MonoBehaviour
         GetComponent<NavMeshAgent>().destination = target.transform.position;
     }
 
-    public void moveToTarget(ChaseData data)
+    private void OnCollisionEnter(Collision collision)
     {
-        
+        Bullet bull = collision.gameObject.GetComponent<Bullet>();
+        if (bull != null)
+        {
+            target_net_id = bull.shooter;
+            attacked = true;
+        }
+        PowerUp pup = collision.gameObject.GetComponent<PowerUp>();
+        if (bull != null)
+        {
+            target_net_id = pup.thrower;
+            attacked = true;
+        }
+
+    }
+
+    /*public void moveToTarget(ChaseData data)
+    {
         StartCoroutine("Chase",data);
     }
 
@@ -117,11 +138,11 @@ public class Boss : MonoBehaviour
                 yield return new WaitForSeconds(5f);
             }
         }
-    }
+    }*/
 
 }
 
-public class ChaseData
+/*public class ChaseData
 {
     public Boss_walk walk;
     public Transform target;
@@ -131,4 +152,4 @@ public class ChaseData
         walk = walk_ref;
         target = trans;
     }
-}
+}*/

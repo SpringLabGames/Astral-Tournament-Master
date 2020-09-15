@@ -264,6 +264,7 @@ public class NewPlayerController1 : NetworkBehaviour
         if(!isClient)
         {
             Bullet bullet = Instantiate<GameObject>(Resources.Load<GameObject>("Prefabs/Bullet")).GetComponent<Bullet>();
+            bullet.setShooter((int)GetComponent<NetworkVehicle>().netId.Value);
             Vector3 position = GetComponent<NetworkVehicle>().spawnBullet.transform.position;
             bullet.transform.position = position;
             float cos = Vector3.Dot(Vector3.forward, trajectory.normalized);
@@ -282,6 +283,7 @@ public class NewPlayerController1 : NetworkBehaviour
     {
         GameObject bullet = Instantiate<GameObject>(Resources.Load<GameObject>("Prefabs/Bullet"));
         bullet.GetComponent<Bullet>().attack = attack;
+        bullet.GetComponent<Bullet>().setShooter((int)GetComponent<NetworkVehicle>().netId.Value);
         /*Vector3 position = GetComponent<NetworkVehicle>().spawnBullet.transform.position;
         position.y -= 1;
         bullet.transform.position = position;*/
@@ -305,6 +307,7 @@ public class NewPlayerController1 : NetworkBehaviour
         if(data!=null)
         {
             PowerUp powerUp = data.powerUp;
+            powerUp.setThrower((int)GetComponent<NetworkVehicle>().netId.Value);
             Vector3 force = data.force;
             NetworkVehicle net = GetComponent<NetworkVehicle>();
             powerUp.use(net, force);

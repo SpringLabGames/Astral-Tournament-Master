@@ -41,7 +41,7 @@ public class Boss_walk : StateMachineBehaviour
 
         if (target_player == null)
         {
-            animator.GetComponent<Boss>().moveToFruit();
+            //animator.GetComponent<Boss>().moveToFruit();
 
             targetPos = new Vector3(target_fruit.transform.position.x, rb.position.y, target_fruit.transform.position.z);
             //rb.transform.LookAt(targetPos);
@@ -58,7 +58,9 @@ public class Boss_walk : StateMachineBehaviour
         }
         else
         {
-            animator.GetComponent<Boss>().moveToTarget(new ChaseData(this,target_player.transform));
+            //animator.GetComponent<Boss>().moveToTarget(new ChaseData(this,target_player.transform));
+
+            animator.GetComponent<Boss>().moveTo(target_player);
 
             targetPos = new Vector3(target_player.transform.position.x, rb.position.y, target_player.transform.position.z);
             //rb.transform.LookAt(targetPos);
@@ -96,16 +98,6 @@ public class Boss_walk : StateMachineBehaviour
         {
             animator.ResetTrigger("Attack_swing");
             animator.ResetTrigger("Attack_kick");
-        }
-    }
-
-    private IEnumerator calcPosition(Animator animator)
-    {
-        while (true)
-        {
-            target_player = GameObject.FindGameObjectWithTag("Player");
-            animator.GetComponent<Boss>().moveTo(target_player);
-            yield return new WaitForSeconds(5f);
         }
     }
 }

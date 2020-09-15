@@ -10,6 +10,8 @@ public class Bullet : MonoBehaviour
 
     public GameObject hitPrefab;
 
+    public int shooter;
+
     private void OnTriggerEnter(Collider collider)
     {
         NetworkVehicle net = collider.GetComponent<NetworkVehicle>();
@@ -34,15 +36,8 @@ public class Bullet : MonoBehaviour
         Destroy(gameObject);
     }
 
-    // Start is called before the first frame update
-    void Start()
+    public void setShooter(int IDShooter)
     {
-        
-    }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
     }
 }

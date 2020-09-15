@@ -6,6 +6,7 @@ using UnityEngine.Networking;
 public abstract class PowerUp : MonoBehaviour
 {
     public Texture image;
+    public int thrower;
 
     protected abstract void OnUsePowerUp(NetworkVehicle net,Vector3 force);
 
@@ -14,15 +15,8 @@ public abstract class PowerUp : MonoBehaviour
         OnUsePowerUp(net,force);
     }
 
-    // Start is called before the first frame update
-    void Start()
+    public void setThrower(int id)
     {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
+        thrower = id;
     }
 }
